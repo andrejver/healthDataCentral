@@ -4,18 +4,16 @@ Fetch Withings measurements and write docs/data.json.
 Designed to run as a Claude Code scheduled Routine on Anthropic-managed
 cloud infrastructure.
 
-The Withings refresh token is stored in Azure Key Vault as the secret
-"withings-refresh-token". On every run the token is rotated (Withings
-invalidates the old one on each refresh) and the new value is written
-back to Key Vault — nothing sensitive is committed to the repository.
+The Withings refresh token is stored as a blob in Azure Blob Storage.
+On every run the token is rotated (Withings invalidates the old one on
+each refresh) and the new value is written back — nothing sensitive is
+committed to the repository.
 
 Required environment variables (set in the Routine's environment config):
     WITHINGS_CLIENT_ID
     WITHINGS_CLIENT_SECRET
-    AZURE_KEYVAULT_URL       e.g. https://my-vault.vault.azure.net/
-    AZURE_TENANT_ID
-    AZURE_CLIENT_ID
-    AZURE_CLIENT_SECRET
+    AZURE_STORAGE_CONNECTION_STRING   from Storage account → Access keys
+    AZURE_STORAGE_CONTAINER           e.g. "withings" (created in setup)
 """
 
 import json
@@ -26,8 +24,7 @@ from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
+from azure.storage.blob import BlobServiceClient
 
 load_dotenv()
 
@@ -37,8 +34,9 @@ load_dotenv()
 
 CLIENT_ID = os.environ["WITHINGS_CLIENT_ID"]
 CLIENT_SECRET = os.environ["WITHINGS_CLIENT_SECRET"]
-KEYVAULT_URL = os.environ["AZURE_KEYVAULT_URL"]
-SECRET_NAME = "withings-refresh-token"
+CONN_STR = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
+CONTAINER = os.environ.get("AZURE_STORAGE_CONTAINER", "withings")
+BLOB_NAME = "refresh_token.txt"
 
 TOKEN_URL = "https://wbsapi.withings.net/v2/oauth2"
 MEASURE_URL = "https://wbsapi.withings.net/measure"
@@ -51,23 +49,21 @@ TWO_YEARS_SECS = 2 * 365 * 24 * 3600
 DATA_PATH = Path(__file__).parent.parent / "docs" / "data.json"
 
 # ---------------------------------------------------------------------------
-# Azure Key Vault helpers
+# Blob Storage helpers
 # ---------------------------------------------------------------------------
 
-def _kv_client() -> SecretClient:
-    # DefaultAzureCredential picks up AZURE_TENANT_ID / AZURE_CLIENT_ID /
-    # AZURE_CLIENT_SECRET automatically, both locally and in the Routine.
-    return SecretClient(vault_url=KEYVAULT_URL, credential=DefaultAzureCredential())
+def _blob_client():
+    service = BlobServiceClient.from_connection_string(CONN_STR)
+    return service.get_blob_client(container=CONTAINER, blob=BLOB_NAME)
 
 
 def read_refresh_token() -> str:
-    client = _kv_client()
-    return client.get_secret(SECRET_NAME).value
+    data = _blob_client().download_blob().readall()
+    return data.decode().strip()
 
 
 def write_refresh_token(token: str) -> None:
-    client = _kv_client()
-    client.set_secret(SECRET_NAME, token)
+    _blob_client().upload_blob(token.encode(), overwrite=True)
 
 # ---------------------------------------------------------------------------
 # Token refresh
@@ -143,13 +139,13 @@ def parse_groups(groups: list[dict]) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 def main():
-    print("Reading refresh token from Azure Key Vault...")
+    print("Reading refresh token from Azure Blob Storage...")
     refresh_token = read_refresh_token()
 
     print("Refreshing Withings access token...")
     access_token, new_refresh_token = refresh_access_token(refresh_token)
 
-    print("Writing rotated refresh token back to Key Vault...")
+    print("Writing rotated refresh token back to Blob Storage...")
     write_refresh_token(new_refresh_token)
     print("  Token rotated successfully.")
 

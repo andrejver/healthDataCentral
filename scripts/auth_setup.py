@@ -2,7 +2,7 @@
 One-time local OAuth setup for Withings API.
 
 Run this script once to obtain a refresh token and seed it into
-Azure Key Vault. After that the Claude Code Routine takes over,
+Azure Blob Storage. After that the Claude Code Routine takes over,
 rotating the token automatically on every run.
 
 Usage:
@@ -18,15 +18,15 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 import requests
 from dotenv import load_dotenv
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
+from azure.storage.blob import BlobServiceClient
 
 load_dotenv()
 
 CLIENT_ID = os.environ["CLIENT_ID"]
 CLIENT_SECRET = os.environ["CLIENT_SECRET"]
-KEYVAULT_URL = os.environ["AZURE_KEYVAULT_URL"]
-SECRET_NAME = "withings-refresh-token"
+CONN_STR = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
+CONTAINER = os.environ.get("AZURE_STORAGE_CONTAINER", "withings")
+BLOB_NAME = "refresh_token.txt"
 
 REDIRECT_URI = "http://localhost:8080"
 AUTH_URL = "https://account.withings.com/oauth2_user/authorize2"
@@ -93,12 +93,16 @@ def exchange_code(code: str) -> dict:
     return body["body"]
 
 
-def seed_key_vault(refresh_token: str) -> None:
-    # Uses AZURE_TENANT_ID / AZURE_CLIENT_ID / AZURE_CLIENT_SECRET from .env,
-    # or falls back to `az login` credentials if those aren't set.
-    client = SecretClient(vault_url=KEYVAULT_URL, credential=DefaultAzureCredential())
-    client.set_secret(SECRET_NAME, refresh_token)
-    print(f"Refresh token stored in Key Vault as '{SECRET_NAME}'.")
+def seed_blob_storage(refresh_token: str) -> None:
+    service = BlobServiceClient.from_connection_string(CONN_STR)
+    # Create container if it doesn't exist yet
+    container_client = service.get_container_client(CONTAINER)
+    if not container_client.exists():
+        container_client.create_container()
+        print(f"Created container '{CONTAINER}'.")
+    blob = service.get_blob_client(container=CONTAINER, blob=BLOB_NAME)
+    blob.upload_blob(refresh_token.encode(), overwrite=True)
+    print(f"Refresh token stored in Azure Blob Storage ({CONTAINER}/{BLOB_NAME}).")
 
 
 def main():
@@ -108,11 +112,11 @@ def main():
 
     refresh_token = tokens["refresh_token"]
 
-    print("Seeding refresh token into Azure Key Vault...")
-    seed_key_vault(refresh_token)
+    print("Seeding refresh token into Azure Blob Storage...")
+    seed_blob_storage(refresh_token)
 
     print("\n" + "=" * 60)
-    print("SUCCESS — token is in Key Vault. Repo is clean.")
+    print("SUCCESS — token is in Blob Storage. Repo is clean.")
     print("Set up the Claude Code Routine (see README) and you're done.")
     print("=" * 60)
     print(f"\nAccess token (valid ~3 hours, for manual testing):")
