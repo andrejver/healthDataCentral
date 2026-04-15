@@ -4,18 +4,18 @@ Fetch Withings measurements and write docs/data.json.
 Designed to run as a Claude Code scheduled Routine on Anthropic-managed
 cloud infrastructure.
 
-Requires the following environment variables (set in the Routine's
-environment settings):
+The Withings refresh token is stored in Azure Key Vault as the secret
+"withings-refresh-token". On every run the token is rotated (Withings
+invalidates the old one on each refresh) and the new value is written
+back to Key Vault — nothing sensitive is committed to the repository.
+
+Required environment variables (set in the Routine's environment config):
     WITHINGS_CLIENT_ID
     WITHINGS_CLIENT_SECRET
-
-The Withings refresh token is stored in tokens/refresh_token.txt inside
-the repository. The routine reads it, rotates it (Withings invalidates
-the old token on every refresh), writes the new value back, and commits
-it alongside the updated data.json.
-
-NOTE: Keep this repository private so the token file is not publicly
-accessible.
+    AZURE_KEYVAULT_URL       e.g. https://my-vault.vault.azure.net/
+    AZURE_TENANT_ID
+    AZURE_CLIENT_ID
+    AZURE_CLIENT_SECRET
 """
 
 import json
@@ -26,6 +26,8 @@ from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
 load_dotenv()
 
@@ -35,6 +37,8 @@ load_dotenv()
 
 CLIENT_ID = os.environ["WITHINGS_CLIENT_ID"]
 CLIENT_SECRET = os.environ["WITHINGS_CLIENT_SECRET"]
+KEYVAULT_URL = os.environ["AZURE_KEYVAULT_URL"]
+SECRET_NAME = "withings-refresh-token"
 
 TOKEN_URL = "https://wbsapi.withings.net/v2/oauth2"
 MEASURE_URL = "https://wbsapi.withings.net/measure"
@@ -44,28 +48,30 @@ MEAS_FAT_PCT = 6   # %
 MEAS_MUSCLE = 76   # kg
 
 TWO_YEARS_SECS = 2 * 365 * 24 * 3600
-
-REPO_ROOT = Path(__file__).parent.parent
-TOKEN_FILE = REPO_ROOT / "tokens" / "refresh_token.txt"
-DATA_PATH = REPO_ROOT / "docs" / "data.json"
+DATA_PATH = Path(__file__).parent.parent / "docs" / "data.json"
 
 # ---------------------------------------------------------------------------
-# Token handling
+# Azure Key Vault helpers
 # ---------------------------------------------------------------------------
+
+def _kv_client() -> SecretClient:
+    # DefaultAzureCredential picks up AZURE_TENANT_ID / AZURE_CLIENT_ID /
+    # AZURE_CLIENT_SECRET automatically, both locally and in the Routine.
+    return SecretClient(vault_url=KEYVAULT_URL, credential=DefaultAzureCredential())
+
 
 def read_refresh_token() -> str:
-    if not TOKEN_FILE.exists():
-        raise FileNotFoundError(
-            f"Refresh token file not found: {TOKEN_FILE}\n"
-            "Run scripts/auth_setup.py locally first."
-        )
-    return TOKEN_FILE.read_text().strip()
+    client = _kv_client()
+    return client.get_secret(SECRET_NAME).value
 
 
 def write_refresh_token(token: str) -> None:
-    TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
-    TOKEN_FILE.write_text(token)
+    client = _kv_client()
+    client.set_secret(SECRET_NAME, token)
 
+# ---------------------------------------------------------------------------
+# Token refresh
+# ---------------------------------------------------------------------------
 
 def refresh_access_token(refresh_token: str) -> tuple[str, str]:
     """Return (access_token, new_refresh_token). Withings rotates on every use."""
@@ -137,14 +143,15 @@ def parse_groups(groups: list[dict]) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 def main():
-    print("Reading refresh token from file...")
+    print("Reading refresh token from Azure Key Vault...")
     refresh_token = read_refresh_token()
 
     print("Refreshing Withings access token...")
     access_token, new_refresh_token = refresh_access_token(refresh_token)
 
-    print("Writing rotated refresh token back to file...")
+    print("Writing rotated refresh token back to Key Vault...")
     write_refresh_token(new_refresh_token)
+    print("  Token rotated successfully.")
 
     print("Fetching measurements...")
     groups = fetch_measurements(access_token)

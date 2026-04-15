@@ -1,12 +1,13 @@
 """
 One-time local OAuth setup for Withings API.
 
-Run this script once to obtain a refresh token, then store it as the
-WITHINGS_REFRESH_TOKEN GitHub secret.
+Run this script once to obtain a refresh token and seed it into
+Azure Key Vault. After that the Claude Code Routine takes over,
+rotating the token automatically on every run.
 
 Usage:
     pip install -r requirements.txt
-    cp .env.example .env   # fill in CLIENT_ID and CLIENT_SECRET
+    # Fill in .env (see README for required keys)
     python scripts/auth_setup.py
 """
 
@@ -14,20 +15,22 @@ import os
 import urllib.parse
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
 load_dotenv()
 
 CLIENT_ID = os.environ["CLIENT_ID"]
 CLIENT_SECRET = os.environ["CLIENT_SECRET"]
+KEYVAULT_URL = os.environ["AZURE_KEYVAULT_URL"]
+SECRET_NAME = "withings-refresh-token"
+
 REDIRECT_URI = "http://localhost:8080"
 AUTH_URL = "https://account.withings.com/oauth2_user/authorize2"
 TOKEN_URL = "https://wbsapi.withings.net/v2/oauth2"
-
-TOKEN_FILE = Path(__file__).parent.parent / "tokens" / "refresh_token.txt"
 
 _auth_code: str | None = None
 
@@ -48,7 +51,7 @@ class _CallbackHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"<h2>Missing code parameter.</h2>")
 
     def log_message(self, *_):
-        pass  # silence request logs
+        pass
 
 
 def get_auth_code() -> str:
@@ -90,6 +93,14 @@ def exchange_code(code: str) -> dict:
     return body["body"]
 
 
+def seed_key_vault(refresh_token: str) -> None:
+    # Uses AZURE_TENANT_ID / AZURE_CLIENT_ID / AZURE_CLIENT_SECRET from .env,
+    # or falls back to `az login` credentials if those aren't set.
+    client = SecretClient(vault_url=KEYVAULT_URL, credential=DefaultAzureCredential())
+    client.set_secret(SECRET_NAME, refresh_token)
+    print(f"Refresh token stored in Key Vault as '{SECRET_NAME}'.")
+
+
 def main():
     code = get_auth_code()
     print("\nExchanging authorisation code for tokens...")
@@ -97,12 +108,12 @@ def main():
 
     refresh_token = tokens["refresh_token"]
 
-    TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
-    TOKEN_FILE.write_text(refresh_token)
+    print("Seeding refresh token into Azure Key Vault...")
+    seed_key_vault(refresh_token)
 
     print("\n" + "=" * 60)
-    print("SUCCESS — refresh token saved to tokens/refresh_token.txt")
-    print("Commit and push that file, then set up the Claude Code Routine.")
+    print("SUCCESS — token is in Key Vault. Repo is clean.")
+    print("Set up the Claude Code Routine (see README) and you're done.")
     print("=" * 60)
     print(f"\nAccess token (valid ~3 hours, for manual testing):")
     print(f"  {tokens['access_token']}\n")
