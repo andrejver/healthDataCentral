@@ -3,9 +3,16 @@
 A personal health dashboard that pulls weight, body fat, and muscle mass data
 from the Withings API and displays it as a static GitHub Pages site.
 
-Data is refreshed daily via a GitHub Actions workflow. The Withings refresh
-token rotates on every use; the workflow automatically writes the new token
-back to the `WITHINGS_REFRESH_TOKEN` GitHub secret so it never goes stale.
+Data is refreshed daily by a **Claude Code scheduled Routine** running on
+Anthropic-managed cloud infrastructure — nothing runs on your local machine
+after the one-time setup, and no GitHub Actions are involved.
+
+The Withings refresh token rotates on every use. The routine writes the new
+token back to `tokens/refresh_token.txt` and commits it, so it stays
+current automatically.
+
+> **Important:** Keep this repository **private**. The `tokens/` directory
+> contains a live Withings OAuth refresh token.
 
 ## Setup
 
@@ -23,7 +30,7 @@ pip install -r requirements.txt
 2. Set the callback URL to `http://localhost:8080`.
 3. Note your **Client ID** and **Client Secret**.
 
-### 3. Create `.env` for local auth
+### 3. Create `.env`
 
 ```
 CLIENT_ID=your_withings_client_id
@@ -36,60 +43,80 @@ CLIENT_SECRET=your_withings_client_secret
 python scripts/auth_setup.py
 ```
 
-Your browser will open to Withings. After authorising, the script prints a
-**refresh token** — copy it.
+Your browser will open to Withings. After authorising, the script saves the
+refresh token to `tokens/refresh_token.txt`. Commit and push that file:
 
-### 5. Add GitHub secrets
+```bash
+git add tokens/refresh_token.txt
+git commit -m "chore: seed Withings refresh token"
+git push
+```
 
-In your repo go to **Settings → Secrets and variables → Actions** and add:
-
-| Secret | Value |
-|---|---|
-| `WITHINGS_CLIENT_ID` | Your Withings client ID |
-| `WITHINGS_CLIENT_SECRET` | Your Withings client secret |
-| `WITHINGS_REFRESH_TOKEN` | The refresh token from step 4 |
-| `GH_PAT` | A fine-grained PAT with **Secrets: write** + **Contents: write** scope on this repo |
-
-### 6. Enable GitHub Pages
+### 5. Enable GitHub Pages
 
 In **Settings → Pages**, set source to **Deploy from a branch**, branch
 `main`, folder `/docs`.
 
-### 7. Trigger the workflow
+### 6. Create the Claude Code Routine
 
-Go to **Actions → Update Withings data → Run workflow** to do a first run.
-Once `docs/data.json` is committed, the Pages site will show your data.
+Go to **claude.ai/code/routines** → **New routine** and configure:
+
+| Field | Value |
+|---|---|
+| **Name** | `withings-dashboard-refresh` |
+| **Schedule** | Daily (or your preferred frequency) |
+| **Repository** | this repo, with **unrestricted branch pushes** enabled |
+| **Environment variables** | `WITHINGS_CLIENT_ID`, `WITHINGS_CLIENT_SECRET` |
+| **Setup script** | `pip install -r requirements.txt` |
+| **Prompt** | see below |
+
+**Routine prompt:**
+
+```
+Run `python scripts/fetch_and_build.py` to fetch the latest Withings
+measurements and update docs/data.json.
+
+Then commit any changed files (tokens/refresh_token.txt and docs/data.json)
+directly to the main branch with the message "chore: update Withings data".
+Push the commit.
+```
+
+### 7. Trigger the routine manually first
+
+In claude.ai/code/routines, hit **Run now** to verify everything works.
+Once `docs/data.json` is committed the Pages site will show your data.
 
 ## How it works
 
 ```
-GitHub Actions (daily cron)
-  └─ fetch_and_build.py
-        ├─ Refreshes access token (Withings rotates refresh token each time)
-        ├─ Writes new refresh token back to WITHINGS_REFRESH_TOKEN secret
-        ├─ Fetches all measurements (weight / fat % / muscle mass)
-        └─ Writes docs/data.json
+Your machine (once)
+  auth_setup.py  →  saves tokens/refresh_token.txt  →  commit & push
 
-docs/index.html (static, Chart.js via CDN)
-  ├─ Reads data.json at page load
-  ├─ Header stats: current weight, 7-day + 30-day deltas
-  ├─ Weight chart with 7-day moving average overlay
-  ├─ Body fat % chart
-  ├─ Muscle mass chart
-  └─ Date range selector: 30d / 90d / 1y / all
+Claude Code Routine (daily, Anthropic cloud)
+  fetch_and_build.py
+    ├─ reads  tokens/refresh_token.txt
+    ├─ refreshes access token (Withings rotates the refresh token)
+    ├─ writes new refresh token → tokens/refresh_token.txt
+    ├─ fetches measurements (weight / fat % / muscle mass)
+    └─ writes docs/data.json
+  git commit & push (tokens/refresh_token.txt + docs/data.json)
+
+GitHub Pages
+  serves docs/index.html + docs/data.json  →  your dashboard
 ```
 
 ## Files
 
 ```
 withings-dashboard/
-├── .github/workflows/update.yml   # daily CI job
 ├── scripts/
-│   ├── auth_setup.py              # one-time local OAuth flow
-│   └── fetch_and_build.py        # runs in CI
+│   ├── auth_setup.py          # one-time local OAuth flow
+│   └── fetch_and_build.py     # runs in Claude Code Routine
 ├── docs/
-│   ├── index.html                 # dashboard
-│   └── data.json                  # generated — do not edit manually
+│   ├── index.html             # dashboard (Chart.js, no build step)
+│   └── data.json              # generated — do not edit manually
+├── tokens/
+│   └── refresh_token.txt      # kept up-to-date by the routine
 ├── requirements.txt
 ├── .gitignore
 └── README.md

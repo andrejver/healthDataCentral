@@ -1,23 +1,33 @@
 """
 Fetch Withings measurements and write docs/data.json.
 
-Runs in GitHub Actions. Expects the following environment variables /
-GitHub secrets to be set:
+Designed to run as a Claude Code scheduled Routine on Anthropic-managed
+cloud infrastructure.
+
+Requires the following environment variables (set in the Routine's
+environment settings):
     WITHINGS_CLIENT_ID
     WITHINGS_CLIENT_SECRET
-    WITHINGS_REFRESH_TOKEN
-    GH_PAT            — fine-grained PAT with Secrets:write + Contents:write
-    GITHUB_REPOSITORY — provided automatically by Actions (owner/repo)
+
+The Withings refresh token is stored in tokens/refresh_token.txt inside
+the repository. The routine reads it, rotates it (Withings invalidates
+the old token on every refresh), writes the new value back, and commits
+it alongside the updated data.json.
+
+NOTE: Keep this repository private so the token file is not publicly
+accessible.
 """
 
-import base64
 import json
 import os
 import time
+import datetime
 from pathlib import Path
 
 import requests
-from nacl import encoding, public
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ---------------------------------------------------------------------------
 # Config
@@ -25,27 +35,40 @@ from nacl import encoding, public
 
 CLIENT_ID = os.environ["WITHINGS_CLIENT_ID"]
 CLIENT_SECRET = os.environ["WITHINGS_CLIENT_SECRET"]
-REFRESH_TOKEN = os.environ["WITHINGS_REFRESH_TOKEN"]
-GH_PAT = os.environ["GH_PAT"]
-GITHUB_REPO = os.environ["GITHUB_REPOSITORY"]  # "owner/repo"
 
 TOKEN_URL = "https://wbsapi.withings.net/v2/oauth2"
 MEASURE_URL = "https://wbsapi.withings.net/measure"
 
-# Withings measure type IDs
-MEAS_WEIGHT = 1      # kg
-MEAS_FAT_PCT = 6     # %
-MEAS_MUSCLE = 76     # kg
+MEAS_WEIGHT = 1    # kg
+MEAS_FAT_PCT = 6   # %
+MEAS_MUSCLE = 76   # kg
 
 TWO_YEARS_SECS = 2 * 365 * 24 * 3600
-DATA_PATH = Path(__file__).parent.parent / "docs" / "data.json"
+
+REPO_ROOT = Path(__file__).parent.parent
+TOKEN_FILE = REPO_ROOT / "tokens" / "refresh_token.txt"
+DATA_PATH = REPO_ROOT / "docs" / "data.json"
 
 # ---------------------------------------------------------------------------
-# Token refresh — Withings rotates the refresh token on every call
+# Token handling
 # ---------------------------------------------------------------------------
+
+def read_refresh_token() -> str:
+    if not TOKEN_FILE.exists():
+        raise FileNotFoundError(
+            f"Refresh token file not found: {TOKEN_FILE}\n"
+            "Run scripts/auth_setup.py locally first."
+        )
+    return TOKEN_FILE.read_text().strip()
+
+
+def write_refresh_token(token: str) -> None:
+    TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    TOKEN_FILE.write_text(token)
+
 
 def refresh_access_token(refresh_token: str) -> tuple[str, str]:
-    """Return (access_token, new_refresh_token)."""
+    """Return (access_token, new_refresh_token). Withings rotates on every use."""
     resp = requests.post(
         TOKEN_URL,
         data={
@@ -63,63 +86,22 @@ def refresh_access_token(refresh_token: str) -> tuple[str, str]:
     tokens = body["body"]
     return tokens["access_token"], tokens["refresh_token"]
 
-
 # ---------------------------------------------------------------------------
-# Update the GitHub Actions secret so the next run uses the rotated token
-# ---------------------------------------------------------------------------
-
-def _get_repo_public_key(headers: dict) -> tuple[str, str]:
-    url = f"https://api.github.com/repos/{GITHUB_REPO}/actions/secrets/public-key"
-    resp = requests.get(url, headers=headers)
-    resp.raise_for_status()
-    data = resp.json()
-    return data["key_id"], data["key"]
-
-
-def _encrypt_secret(public_key_b64: str, secret_value: str) -> str:
-    pub_key = public.PublicKey(
-        base64.b64decode(public_key_b64), encoding.RawEncoder
-    )
-    sealed = public.SealedBox(pub_key).encrypt(secret_value.encode())
-    return base64.b64encode(sealed).decode()
-
-
-def update_github_secret(new_refresh_token: str) -> None:
-    headers = {
-        "Authorization": f"Bearer {GH_PAT}",
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
-    key_id, pub_key = _get_repo_public_key(headers)
-    encrypted = _encrypt_secret(pub_key, new_refresh_token)
-
-    url = (
-        f"https://api.github.com/repos/{GITHUB_REPO}"
-        "/actions/secrets/WITHINGS_REFRESH_TOKEN"
-    )
-    resp = requests.put(
-        url,
-        headers=headers,
-        json={"encrypted_value": encrypted, "key_id": key_id},
-    )
-    resp.raise_for_status()
-    print("WITHINGS_REFRESH_TOKEN secret updated successfully.")
-
-
-# ---------------------------------------------------------------------------
-# Measurements fetch
+# Measurements
 # ---------------------------------------------------------------------------
 
 def fetch_measurements(access_token: str) -> list[dict]:
     startdate = int(time.time()) - TWO_YEARS_SECS
-    params = {
-        "action": "getmeas",
-        "meastypes": f"{MEAS_WEIGHT},{MEAS_FAT_PCT},{MEAS_MUSCLE}",
-        "category": 1,
-        "startdate": startdate,
-    }
-    headers = {"Authorization": f"Bearer {access_token}"}
-    resp = requests.get(MEASURE_URL, params=params, headers=headers)
+    resp = requests.get(
+        MEASURE_URL,
+        params={
+            "action": "getmeas",
+            "meastypes": f"{MEAS_WEIGHT},{MEAS_FAT_PCT},{MEAS_MUSCLE}",
+            "category": 1,
+            "startdate": startdate,
+        },
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
     resp.raise_for_status()
     body = resp.json()
     if body.get("status") != 0:
@@ -127,45 +109,42 @@ def fetch_measurements(access_token: str) -> list[dict]:
     return body["body"]["measuregrps"]
 
 
-def _decode_value(value: int, unit: int) -> float:
+def _decode(value: int, unit: int) -> float:
     return value * (10 ** unit)
 
 
-def parse_groups(groups: list[dict]) -> list[dict]:
-    """Convert raw measure groups to clean dicts, one per date."""
-    by_date: dict[str, dict] = {}
+def _ts_to_date(ts: int) -> str:
+    return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d")
 
+
+def parse_groups(groups: list[dict]) -> list[dict]:
+    by_date: dict[str, dict] = {}
     for grp in groups:
         date_str = _ts_to_date(grp["date"])
         row = by_date.setdefault(date_str, {"date": date_str})
         for m in grp["measures"]:
-            val = _decode_value(m["value"], m["unit"])
+            val = _decode(m["value"], m["unit"])
             if m["type"] == MEAS_WEIGHT:
                 row["weight"] = round(val, 2)
             elif m["type"] == MEAS_FAT_PCT:
                 row["fat_pct"] = round(val, 2)
             elif m["type"] == MEAS_MUSCLE:
                 row["muscle_kg"] = round(val, 2)
-
-    # Sort ascending by date
     return sorted(by_date.values(), key=lambda r: r["date"])
-
-
-def _ts_to_date(ts: int) -> str:
-    import datetime
-    return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d")
-
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
 def main():
-    print("Refreshing Withings access token...")
-    access_token, new_refresh_token = refresh_access_token(REFRESH_TOKEN)
+    print("Reading refresh token from file...")
+    refresh_token = read_refresh_token()
 
-    print("Updating rotated refresh token in GitHub secrets...")
-    update_github_secret(new_refresh_token)
+    print("Refreshing Withings access token...")
+    access_token, new_refresh_token = refresh_access_token(refresh_token)
+
+    print("Writing rotated refresh token back to file...")
+    write_refresh_token(new_refresh_token)
 
     print("Fetching measurements...")
     groups = fetch_measurements(access_token)
@@ -174,7 +153,7 @@ def main():
 
     DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     DATA_PATH.write_text(json.dumps(records, indent=2))
-    print(f"Written to {DATA_PATH}")
+    print(f"Written: {DATA_PATH}")
 
 
 if __name__ == "__main__":

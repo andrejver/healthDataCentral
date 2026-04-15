@@ -14,6 +14,7 @@ import os
 import urllib.parse
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
@@ -25,6 +26,8 @@ CLIENT_SECRET = os.environ["CLIENT_SECRET"]
 REDIRECT_URI = "http://localhost:8080"
 AUTH_URL = "https://account.withings.com/oauth2_user/authorize2"
 TOKEN_URL = "https://wbsapi.withings.net/v2/oauth2"
+
+TOKEN_FILE = Path(__file__).parent.parent / "tokens" / "refresh_token.txt"
 
 _auth_code: str | None = None
 
@@ -93,12 +96,15 @@ def main():
     tokens = exchange_code(code)
 
     refresh_token = tokens["refresh_token"]
+
+    TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    TOKEN_FILE.write_text(refresh_token)
+
     print("\n" + "=" * 60)
-    print("SUCCESS — copy the refresh token below and add it as the")
-    print("WITHINGS_REFRESH_TOKEN secret in your GitHub repository.")
+    print("SUCCESS — refresh token saved to tokens/refresh_token.txt")
+    print("Commit and push that file, then set up the Claude Code Routine.")
     print("=" * 60)
-    print(f"\nRefresh token:\n  {refresh_token}\n")
-    print("Also note your access_token (valid ~3 hours, for manual testing):")
+    print(f"\nAccess token (valid ~3 hours, for manual testing):")
     print(f"  {tokens['access_token']}\n")
 
 
