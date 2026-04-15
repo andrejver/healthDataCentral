@@ -1,0 +1,10 @@
+{
+  "sandbox": {
+    "network": {
+      "allowedDomains": [
+        "avsportwithings.blob.core.windows.net",
+        "wbsapi.withings.net"
+      ]
+    }
+  }
+}
