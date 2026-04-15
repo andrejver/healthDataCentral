@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withings Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --text: #e2e8f0;
+      --muted: #8892a4;
+      --accent: #6366f1;
+      --green: #22c55e;
+      --red: #ef4444;
+      --orange: #f97316;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      flex: 1 1 auto;
+    }
+
+    header p.subtitle {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* Range selector */
+    .range-btns {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .range-btns button {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .range-btns button.active,
+    .range-btns button:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Stat cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+    }
+
+    .card .label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+
+    .card .value {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .card .delta {
+      font-size: 0.78rem;
+      margin-top: 0.2rem;
+    }
+
+    .up   { color: var(--red); }
+    .down { color: var(--green); }
+    .flat { color: var(--muted); }
+
+    /* Charts */
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 900px) {
+      .charts { grid-template-columns: 2fr 1fr 1fr; }
+      .chart-box.main { grid-row: 1; }
+    }
+
+    .chart-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .chart-box h2 {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    canvas { width: 100% !important; }
+
+    #no-data {
+      display: none;
+      text-align: center;
+      color: var(--muted);
+      margin: 4rem auto;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Withings Dashboard</h1>
+    <p class="subtitle" id="last-updated"></p>
+  </div>
+  <div class="range-btns">
+    <button data-range="30">30d</button>
+    <button data-range="90" class="active">90d</button>
+    <button data-range="365">1y</button>
+    <button data-range="0">All</button>
+  </div>
+</header>
+
+<div class="cards">
+  <div class="card">
+    <div class="label">Current weight</div>
+    <div class="value" id="stat-current">—</div>
+    <div class="delta" id="stat-7d"></div>
+  </div>
+  <div class="card">
+    <div class="label">30-day change</div>
+    <div class="value" id="stat-30d">—</div>
+  </div>
+  <div class="card">
+    <div class="label">Min (90d)</div>
+    <div class="value" id="stat-min">—</div>
+  </div>
+  <div class="card">
+    <div class="label">Max (90d)</div>
+    <div class="value" id="stat-max">—</div>
+  </div>
+  <div class="card">
+    <div class="label">Avg (90d)</div>
+    <div class="value" id="stat-avg">—</div>
+  </div>
+</div>
+
+<div id="no-data"><p>No data found. Run the workflow to populate data.json.</p></div>
+
+<div class="charts" id="charts">
+  <div class="chart-box main">
+    <h2>Weight (kg)</h2>
+    <canvas id="chart-weight"></canvas>
+  </div>
+  <div class="chart-box">
+    <h2>Body Fat (%)</h2>
+    <canvas id="chart-fat"></canvas>
+  </div>
+  <div class="chart-box">
+    <h2>Muscle Mass (kg)</h2>
+    <canvas id="chart-muscle"></canvas>
+  </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+const $ = id => document.getElementById(id);
+const fmt = (v, dec = 1) => v == null ? '—' : v.toFixed(dec);
+
+function movingAvg(arr, window = 7) {
+  return arr.map((_, i) => {
+    const slice = arr.slice(Math.max(0, i - window + 1), i + 1).filter(v => v != null);
+    return slice.length ? slice.reduce((a, b) => a + b, 0) / slice.length : null;
+  });
+}
+
+function deltaClass(d) {
+  if (d == null) return 'flat';
+  return d > 0.05 ? 'up' : d < -0.05 ? 'down' : 'flat';
+}
+
+function deltaLabel(d) {
+  if (d == null) return '';
+  const sign = d > 0 ? '+' : '';
+  return `${sign}${fmt(d)} kg`;
+}
+
+// ---------------------------------------------------------------------------
+// Chart factory
+// ---------------------------------------------------------------------------
+const CHART_DEFAULTS = {
+  responsive: true,
+  maintainAspectRatio: true,
+  interaction: { mode: 'index', intersect: false },
+  plugins: { legend: { display: false }, tooltip: { displayColors: false } },
+  scales: {
+    x: {
+      ticks: { color: '#8892a4', maxTicksLimit: 6, maxRotation: 0 },
+      grid: { color: '#2a2d3a' },
+    },
+    y: {
+      ticks: { color: '#8892a4' },
+      grid: { color: '#2a2d3a' },
+    },
+  },
+};
+
+function makeChart(id, labels, datasets, aspectRatio = 2.5) {
+  return new Chart($(id), {
+    type: 'line',
+    data: { labels, datasets },
+    options: { ...CHART_DEFAULTS, aspectRatio },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+let allData = [];
+let charts = {};
+let activeRange = 90;
+
+function filterData(range) {
+  if (!range) return allData;
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - range);
+  const cutStr = cutoff.toISOString().slice(0, 10);
+  return allData.filter(r => r.date >= cutStr);
+}
+
+function renderStats(data) {
+  if (!data.length) return;
+
+  const weights = data.map(r => r.weight).filter(v => v != null);
+  const last = data.filter(r => r.weight != null).at(-1);
+  const cur = last?.weight;
+
+  $('stat-current').textContent = cur != null ? `${fmt(cur)} kg` : '—';
+
+  // 7-day delta
+  const d7 = data.filter(r => {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - 7);
+    return r.date >= cutoff.toISOString().slice(0, 10) && r.weight != null;
+  });
+  const first7 = d7[0]?.weight;
+  const delta7 = cur != null && first7 != null ? cur - first7 : null;
+  const el7 = $('stat-7d');
+  el7.textContent = `7d: ${deltaLabel(delta7)}`;
+  el7.className = `delta ${deltaClass(delta7)}`;
+
+  // 30-day delta
+  const d30 = allData.filter(r => {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - 30);
+    return r.date >= cutoff.toISOString().slice(0, 10) && r.weight != null;
+  });
+  const first30 = d30[0]?.weight;
+  const latestW = allData.filter(r => r.weight != null).at(-1)?.weight;
+  const delta30 = latestW != null && first30 != null ? latestW - first30 : null;
+  const el30 = $('stat-30d');
+  el30.textContent = delta30 != null ? deltaLabel(delta30) : '—';
+  el30.className = `value ${deltaClass(delta30)}`;
+
+  // 90-day stats
+  const d90 = allData.filter(r => {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - 90);
+    return r.date >= cutoff.toISOString().slice(0, 10) && r.weight != null;
+  }).map(r => r.weight);
+  $('stat-min').textContent = d90.length ? `${fmt(Math.min(...d90))} kg` : '—';
+  $('stat-max').textContent = d90.length ? `${fmt(Math.max(...d90))} kg` : '—';
+  $('stat-avg').textContent = d90.length ? `${fmt(d90.reduce((a, b) => a + b, 0) / d90.length)} kg` : '—';
+}
+
+function destroyCharts() {
+  Object.values(charts).forEach(c => c.destroy());
+  charts = {};
+}
+
+function renderCharts(data) {
+  destroyCharts();
+
+  const labels = data.map(r => r.date);
+  const weights = data.map(r => r.weight ?? null);
+  const avgLine = movingAvg(weights);
+  const fatPct = data.map(r => r.fat_pct ?? null);
+  const muscle = data.map(r => r.muscle_kg ?? null);
+
+  const lineStyle = (color, fill = false) => ({
+    borderColor: color,
+    backgroundColor: fill ? color + '22' : 'transparent',
+    borderWidth: 2,
+    pointRadius: 0,
+    tension: 0.3,
+    fill,
+    spanGaps: true,
+  });
+
+  charts.weight = makeChart('chart-weight', labels, [
+    {
+      label: 'Weight',
+      data: weights,
+      ...lineStyle('#6366f1', true),
+      pointRadius: weights.map((_, i) => i === weights.length - 1 ? 4 : 0),
+    },
+    {
+      label: '7-day avg',
+      data: avgLine,
+      ...lineStyle('#f97316'),
+      borderDash: [4, 3],
+    },
+  ], 2.6);
+
+  charts.fat = makeChart('chart-fat', labels, [
+    { label: 'Fat %', data: fatPct, ...lineStyle('#ef4444', true) },
+  ], 1.8);
+
+  charts.muscle = makeChart('chart-muscle', labels, [
+    { label: 'Muscle kg', data: muscle, ...lineStyle('#22c55e', true) },
+  ], 1.8);
+}
+
+function applyRange(range) {
+  activeRange = range;
+  document.querySelectorAll('.range-btns button').forEach(btn => {
+    btn.classList.toggle('active', Number(btn.dataset.range) === range);
+  });
+  const data = filterData(range);
+  renderStats(data);
+  renderCharts(data);
+}
+
+// ---------------------------------------------------------------------------
+// Bootstrap
+// ---------------------------------------------------------------------------
+fetch('data.json')
+  .then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  })
+  .then(data => {
+    if (!Array.isArray(data) || !data.length) {
+      $('no-data').style.display = 'block';
+      $('charts').style.display = 'none';
+      return;
+    }
+    allData = data;
+    const lastDate = allData.at(-1)?.date;
+    if (lastDate) $('last-updated').textContent = `Last updated: ${lastDate}`;
+
+    document.querySelectorAll('.range-btns button').forEach(btn => {
+      btn.addEventListener('click', () => applyRange(Number(btn.dataset.range)));
+    });
+
+    applyRange(activeRange);
+  })
+  .catch(() => {
+    $('no-data').style.display = 'block';
+    $('charts').style.display = 'none';
+  });
+</script>
+</body>
+</html>
