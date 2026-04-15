@@ -28,7 +28,7 @@ CONN_STR = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
 CONTAINER = os.environ.get("AZURE_STORAGE_CONTAINER", "withings")
 BLOB_NAME = "refresh_token.txt"
 
-REDIRECT_URI = "http://localhost:8080"
+REDIRECT_URI = "http://localhost:9877"
 AUTH_URL = "https://account.withings.com/oauth2_user/authorize2"
 TOKEN_URL = "https://wbsapi.withings.net/v2/oauth2"
 
@@ -66,7 +66,7 @@ def get_auth_code() -> str:
     print(f"Opening browser for authorisation:\n  {url}\n")
     webbrowser.open(url)
 
-    server = HTTPServer(("localhost", 8080), _CallbackHandler)
+    server = HTTPServer(("localhost", 9877), _CallbackHandler)
     print("Waiting for callback on http://localhost:8080 ...")
     server.handle_request()
     if _auth_code is None:
