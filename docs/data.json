@@ -1,0 +1,2990 @@
+[
+  {
+    "date": "2024-04-16",
+    "weight": 107.37
+  },
+  {
+    "date": "2024-04-17",
+    "weight": 106.64,
+    "muscle_kg": 66.16,
+    "fat_pct": 34.7
+  },
+  {
+    "date": "2024-04-18",
+    "weight": 105.83,
+    "muscle_kg": 64.93,
+    "fat_pct": 35.41
+  },
+  {
+    "date": "2024-04-19",
+    "weight": 105.5,
+    "muscle_kg": 65.01,
+    "fat_pct": 35.12
+  },
+  {
+    "date": "2024-04-20",
+    "weight": 105.27,
+    "muscle_kg": 65.52,
+    "fat_pct": 34.48
+  },
+  {
+    "date": "2024-04-21",
+    "weight": 105.75,
+    "muscle_kg": 66.82,
+    "fat_pct": 33.5
+  },
+  {
+    "date": "2024-04-22",
+    "weight": 104.94,
+    "muscle_kg": 64.08,
+    "fat_pct": 35.7
+  },
+  {
+    "date": "2024-04-23",
+    "weight": 104.56,
+    "muscle_kg": 64.42,
+    "fat_pct": 35.13
+  },
+  {
+    "date": "2024-04-24",
+    "weight": 104.47,
+    "muscle_kg": 64.41,
+    "fat_pct": 35.08
+  },
+  {
+    "date": "2024-04-25",
+    "weight": 104.09,
+    "muscle_kg": 64.74,
+    "fat_pct": 34.52
+  },
+  {
+    "date": "2024-04-26",
+    "weight": 103.98,
+    "muscle_kg": 64.16,
+    "fat_pct": 35.03
+  },
+  {
+    "date": "2024-04-27",
+    "weight": 103.31,
+    "muscle_kg": 64.4,
+    "fat_pct": 34.36
+  },
+  {
+    "date": "2024-04-28",
+    "weight": 103.7,
+    "muscle_kg": 66.44,
+    "fat_pct": 32.57
+  },
+  {
+    "date": "2024-04-29",
+    "weight": 103.57,
+    "muscle_kg": 66.19,
+    "fat_pct": 32.73
+  },
+  {
+    "date": "2024-04-30",
+    "weight": 103.51,
+    "muscle_kg": 66.91,
+    "fat_pct": 31.97
+  },
+  {
+    "date": "2024-05-01",
+    "weight": 103.14,
+    "muscle_kg": 67.28,
+    "fat_pct": 31.36
+  },
+  {
+    "date": "2024-05-02",
+    "weight": 102.11,
+    "muscle_kg": 64.37,
+    "fat_pct": 33.64
+  },
+  {
+    "date": "2024-05-03",
+    "weight": 102.19,
+    "muscle_kg": 64.84,
+    "fat_pct": 33.2
+  },
+  {
+    "date": "2024-05-04",
+    "weight": 101.53,
+    "muscle_kg": 64.88,
+    "fat_pct": 32.73
+  },
+  {
+    "date": "2024-05-05",
+    "weight": 101.66,
+    "muscle_kg": 65.35,
+    "fat_pct": 32.33
+  },
+  {
+    "date": "2024-05-06",
+    "weight": 101.69,
+    "muscle_kg": 65.43,
+    "fat_pct": 32.28
+  },
+  {
+    "date": "2024-05-07",
+    "weight": 101.25,
+    "muscle_kg": 65.25,
+    "fat_pct": 32.17
+  },
+  {
+    "date": "2024-05-08",
+    "weight": 101.07,
+    "muscle_kg": 65.08,
+    "fat_pct": 32.22
+  },
+  {
+    "date": "2024-05-09",
+    "weight": 100.92,
+    "muscle_kg": 64.92,
+    "fat_pct": 32.28
+  },
+  {
+    "date": "2024-05-10",
+    "weight": 100.78,
+    "muscle_kg": 66.56,
+    "fat_pct": 30.5
+  },
+  {
+    "date": "2024-05-11",
+    "weight": 100.03,
+    "muscle_kg": 64.2,
+    "fat_pct": 32.44
+  },
+  {
+    "date": "2024-05-12",
+    "weight": 100.12,
+    "muscle_kg": 64.72,
+    "fat_pct": 31.96
+  },
+  {
+    "date": "2024-05-13",
+    "weight": 99.54,
+    "muscle_kg": 64.68,
+    "fat_pct": 31.61
+  },
+  {
+    "date": "2024-05-14",
+    "weight": 99.23,
+    "muscle_kg": 64.51,
+    "fat_pct": 31.57
+  },
+  {
+    "date": "2024-05-15",
+    "weight": 99.11,
+    "muscle_kg": 64.2,
+    "fat_pct": 31.81
+  },
+  {
+    "date": "2024-05-16",
+    "weight": 99.13,
+    "muscle_kg": 64.78,
+    "fat_pct": 31.22
+  },
+  {
+    "date": "2024-05-17",
+    "weight": 99.3,
+    "muscle_kg": 64.72,
+    "fat_pct": 31.4
+  },
+  {
+    "date": "2024-05-18",
+    "weight": 99.06,
+    "muscle_kg": 65.55,
+    "fat_pct": 30.35
+  },
+  {
+    "date": "2024-05-19",
+    "weight": 98.92,
+    "muscle_kg": 66.03,
+    "fat_pct": 29.75
+  },
+  {
+    "date": "2024-05-20",
+    "weight": 98.81,
+    "muscle_kg": 64.96,
+    "fat_pct": 30.8
+  },
+  {
+    "date": "2024-05-21",
+    "weight": 97.95,
+    "muscle_kg": 63.91,
+    "fat_pct": 31.31
+  },
+  {
+    "date": "2024-05-22",
+    "weight": 98.16,
+    "muscle_kg": 63.78,
+    "fat_pct": 31.59
+  },
+  {
+    "date": "2024-05-23",
+    "weight": 98.01,
+    "muscle_kg": 64.88,
+    "fat_pct": 30.32
+  },
+  {
+    "date": "2024-05-24",
+    "weight": 97.97,
+    "muscle_kg": 64.74,
+    "fat_pct": 30.45
+  },
+  {
+    "date": "2024-05-25",
+    "weight": 97.71,
+    "muscle_kg": 64.71,
+    "fat_pct": 30.29
+  },
+  {
+    "date": "2024-05-26",
+    "weight": 98.27,
+    "muscle_kg": 64.56,
+    "fat_pct": 30.85
+  },
+  {
+    "date": "2024-05-27",
+    "weight": 98.03,
+    "muscle_kg": 64.74,
+    "fat_pct": 30.49
+  },
+  {
+    "date": "2024-05-28",
+    "weight": 96.84,
+    "muscle_kg": 64.08,
+    "fat_pct": 30.35
+  },
+  {
+    "date": "2024-05-29",
+    "weight": 96.78,
+    "muscle_kg": 63.94,
+    "fat_pct": 30.45
+  },
+  {
+    "date": "2024-05-30",
+    "weight": 96.99,
+    "muscle_kg": 64.5,
+    "fat_pct": 30.0
+  },
+  {
+    "date": "2024-05-31",
+    "weight": 97.21,
+    "muscle_kg": 67.01,
+    "fat_pct": 27.47
+  },
+  {
+    "date": "2024-06-01",
+    "weight": 96.14,
+    "muscle_kg": 63.23,
+    "fat_pct": 30.77
+  },
+  {
+    "date": "2024-06-02",
+    "weight": 96.02,
+    "muscle_kg": 63.61,
+    "fat_pct": 30.26
+  },
+  {
+    "date": "2024-06-03",
+    "weight": 95.94,
+    "muscle_kg": 62.89,
+    "fat_pct": 30.99
+  },
+  {
+    "date": "2024-06-04",
+    "weight": 95.49,
+    "muscle_kg": 63.04,
+    "fat_pct": 30.5
+  },
+  {
+    "date": "2024-06-05",
+    "weight": 95.54,
+    "muscle_kg": 63.63,
+    "fat_pct": 29.89
+  },
+  {
+    "date": "2024-06-06",
+    "weight": 95.48,
+    "muscle_kg": 64.07,
+    "fat_pct": 29.37
+  },
+  {
+    "date": "2024-06-07",
+    "weight": 96.01,
+    "muscle_kg": 64.78,
+    "fat_pct": 28.99
+  },
+  {
+    "date": "2024-06-10",
+    "weight": 95.46,
+    "muscle_kg": 64.51,
+    "fat_pct": 28.87
+  },
+  {
+    "date": "2024-06-11",
+    "weight": 94.53,
+    "muscle_kg": 63.08,
+    "fat_pct": 29.75
+  },
+  {
+    "date": "2024-06-12",
+    "weight": 94.2,
+    "muscle_kg": 63.17,
+    "fat_pct": 29.41
+  },
+  {
+    "date": "2024-06-13",
+    "weight": 93.26,
+    "muscle_kg": 60.97,
+    "fat_pct": 31.15
+  },
+  {
+    "date": "2024-06-14",
+    "weight": 93.38,
+    "muscle_kg": 62.3,
+    "fat_pct": 29.76
+  },
+  {
+    "date": "2024-06-15",
+    "weight": 93.63,
+    "muscle_kg": 62.81,
+    "fat_pct": 29.39
+  },
+  {
+    "date": "2024-06-17",
+    "weight": 94.17,
+    "muscle_kg": 63.35,
+    "fat_pct": 29.18
+  },
+  {
+    "date": "2024-06-18",
+    "weight": 93.26,
+    "muscle_kg": 63.24,
+    "fat_pct": 28.62
+  },
+  {
+    "date": "2024-06-19",
+    "weight": 93.76,
+    "muscle_kg": 63.85,
+    "fat_pct": 28.33
+  },
+  {
+    "date": "2024-06-20",
+    "weight": 93.88,
+    "muscle_kg": 64.41,
+    "fat_pct": 27.79
+  },
+  {
+    "date": "2024-06-21",
+    "weight": 93.76,
+    "muscle_kg": 63.84,
+    "fat_pct": 28.34
+  },
+  {
+    "date": "2024-06-22",
+    "weight": 93.69,
+    "muscle_kg": 64.07,
+    "fat_pct": 28.03
+  },
+  {
+    "date": "2024-06-23",
+    "weight": 93.57,
+    "muscle_kg": 63.93,
+    "fat_pct": 28.09
+  },
+  {
+    "date": "2024-06-24",
+    "weight": 94.6,
+    "muscle_kg": 66.85,
+    "fat_pct": 25.64
+  },
+  {
+    "date": "2024-06-25",
+    "weight": 93.33,
+    "muscle_kg": 64.25,
+    "fat_pct": 27.55
+  },
+  {
+    "date": "2024-06-26",
+    "weight": 92.36,
+    "muscle_kg": 63.75,
+    "fat_pct": 27.36
+  },
+  {
+    "date": "2024-06-27",
+    "weight": 93.29,
+    "muscle_kg": 65.49,
+    "fat_pct": 26.12
+  },
+  {
+    "date": "2024-06-28",
+    "weight": 93.09,
+    "muscle_kg": 64.45,
+    "fat_pct": 27.13
+  },
+  {
+    "date": "2024-06-29",
+    "weight": 91.84,
+    "muscle_kg": 63.95,
+    "fat_pct": 26.72
+  },
+  {
+    "date": "2024-07-01",
+    "weight": 93.61,
+    "muscle_kg": 67.1,
+    "fat_pct": 24.56
+  },
+  {
+    "date": "2024-07-02",
+    "weight": 92.88,
+    "muscle_kg": 66.86,
+    "fat_pct": 24.25
+  },
+  {
+    "date": "2024-07-03",
+    "weight": 92.17,
+    "muscle_kg": 66.23,
+    "fat_pct": 24.39
+  },
+  {
+    "date": "2024-07-04",
+    "weight": 91.67,
+    "muscle_kg": 66.21,
+    "fat_pct": 23.99
+  },
+  {
+    "date": "2024-07-05",
+    "weight": 91.92,
+    "muscle_kg": 66.5,
+    "fat_pct": 23.87
+  },
+  {
+    "date": "2024-07-06",
+    "weight": 92.01,
+    "muscle_kg": 65.51,
+    "fat_pct": 25.07
+  },
+  {
+    "date": "2024-07-07",
+    "weight": 92.32,
+    "muscle_kg": 65.18,
+    "fat_pct": 25.7
+  },
+  {
+    "date": "2024-07-08",
+    "weight": 92.33,
+    "muscle_kg": 65.12,
+    "fat_pct": 25.78
+  },
+  {
+    "date": "2024-07-09",
+    "weight": 91.58,
+    "muscle_kg": 65.08,
+    "fat_pct": 25.22
+  },
+  {
+    "date": "2024-07-10",
+    "weight": 91.0,
+    "muscle_kg": 64.89,
+    "fat_pct": 24.96
+  },
+  {
+    "date": "2024-07-11",
+    "weight": 91.14,
+    "muscle_kg": 65.47,
+    "fat_pct": 24.4
+  },
+  {
+    "date": "2024-07-12",
+    "weight": 90.73,
+    "muscle_kg": 65.16,
+    "fat_pct": 24.43
+  },
+  {
+    "date": "2024-07-13",
+    "weight": 91.06,
+    "muscle_kg": 67.04,
+    "fat_pct": 22.52
+  },
+  {
+    "date": "2024-07-14",
+    "weight": 91.65,
+    "muscle_kg": 66.15,
+    "fat_pct": 24.05
+  },
+  {
+    "date": "2024-07-15",
+    "weight": 91.34,
+    "muscle_kg": 65.58,
+    "fat_pct": 24.45
+  },
+  {
+    "date": "2024-07-16",
+    "weight": 89.8,
+    "muscle_kg": 64.25,
+    "fat_pct": 24.7
+  },
+  {
+    "date": "2024-07-17",
+    "weight": 89.98,
+    "muscle_kg": 64.4,
+    "fat_pct": 24.68
+  },
+  {
+    "date": "2024-07-18",
+    "weight": 90.25,
+    "muscle_kg": 65.79,
+    "fat_pct": 23.29
+  },
+  {
+    "date": "2024-07-19",
+    "weight": 90.26,
+    "muscle_kg": 65.47,
+    "fat_pct": 23.66
+  },
+  {
+    "date": "2024-07-20",
+    "weight": 89.85,
+    "muscle_kg": 65.37,
+    "fat_pct": 23.44
+  },
+  {
+    "date": "2024-07-21",
+    "weight": 89.53,
+    "muscle_kg": 65.08,
+    "fat_pct": 23.51
+  },
+  {
+    "date": "2024-07-22",
+    "weight": 89.54,
+    "muscle_kg": 64.4,
+    "fat_pct": 24.3
+  },
+  {
+    "date": "2024-07-23",
+    "weight": 89.87,
+    "muscle_kg": 65.84,
+    "fat_pct": 22.9
+  },
+  {
+    "date": "2024-07-24",
+    "weight": 88.55,
+    "muscle_kg": 64.77,
+    "fat_pct": 23.03
+  },
+  {
+    "date": "2024-07-25",
+    "weight": 88.58,
+    "muscle_kg": 64.33,
+    "fat_pct": 23.58
+  },
+  {
+    "date": "2024-07-26",
+    "weight": 89.59,
+    "muscle_kg": 65.14,
+    "fat_pct": 23.48
+  },
+  {
+    "date": "2024-07-27",
+    "weight": 88.18,
+    "muscle_kg": 65.15,
+    "fat_pct": 22.24
+  },
+  {
+    "date": "2024-07-28",
+    "weight": 89.16,
+    "muscle_kg": 64.61,
+    "fat_pct": 23.74
+  },
+  {
+    "date": "2024-07-29",
+    "weight": 89.35,
+    "muscle_kg": 69.45,
+    "fat_pct": 18.13
+  },
+  {
+    "date": "2024-07-31",
+    "weight": 89.23,
+    "muscle_kg": 65.04,
+    "fat_pct": 23.29
+  },
+  {
+    "date": "2024-08-01",
+    "weight": 88.79,
+    "muscle_kg": 64.67,
+    "fat_pct": 23.35
+  },
+  {
+    "date": "2024-08-02",
+    "weight": 89.46,
+    "muscle_kg": 65.46,
+    "fat_pct": 22.99
+  },
+  {
+    "date": "2024-08-03",
+    "weight": 89.22,
+    "muscle_kg": 65.29,
+    "fat_pct": 22.99
+  },
+  {
+    "date": "2024-08-04",
+    "weight": 88.84,
+    "muscle_kg": 64.28,
+    "fat_pct": 23.86
+  },
+  {
+    "date": "2024-08-05",
+    "weight": 88.84,
+    "muscle_kg": 64.08,
+    "fat_pct": 24.1
+  },
+  {
+    "date": "2024-08-06",
+    "weight": 88.26,
+    "muscle_kg": 64.04,
+    "fat_pct": 23.65
+  },
+  {
+    "date": "2024-08-07",
+    "weight": 88.55,
+    "muscle_kg": 64.56,
+    "fat_pct": 23.28
+  },
+  {
+    "date": "2024-08-08",
+    "weight": 87.9,
+    "muscle_kg": 64.15,
+    "fat_pct": 23.21
+  },
+  {
+    "date": "2024-08-09",
+    "weight": 88.8,
+    "muscle_kg": 64.78,
+    "fat_pct": 23.23
+  },
+  {
+    "date": "2024-08-14",
+    "weight": 90.11,
+    "muscle_kg": 67.9,
+    "fat_pct": 20.69
+  },
+  {
+    "date": "2024-08-15",
+    "weight": 90.04,
+    "muscle_kg": 65.35,
+    "fat_pct": 23.61
+  },
+  {
+    "date": "2024-08-16",
+    "weight": 89.31,
+    "muscle_kg": 64.85,
+    "fat_pct": 23.58
+  },
+  {
+    "date": "2024-08-17",
+    "weight": 89.25,
+    "muscle_kg": 66.07,
+    "fat_pct": 22.1
+  },
+  {
+    "date": "2024-08-19",
+    "weight": 88.76,
+    "muscle_kg": 64.76,
+    "fat_pct": 23.21
+  },
+  {
+    "date": "2024-08-20",
+    "weight": 89.38
+  },
+  {
+    "date": "2024-08-21",
+    "weight": 88.56,
+    "muscle_kg": 64.91,
+    "fat_pct": 22.87
+  },
+  {
+    "date": "2024-08-22",
+    "weight": 88.72,
+    "muscle_kg": 65.61,
+    "fat_pct": 22.17
+  },
+  {
+    "date": "2024-08-24",
+    "weight": 87.56,
+    "muscle_kg": 63.52,
+    "fat_pct": 23.65
+  },
+  {
+    "date": "2024-08-27",
+    "weight": 89.32,
+    "muscle_kg": 65.53,
+    "fat_pct": 22.8
+  },
+  {
+    "date": "2024-08-28",
+    "weight": 90.12,
+    "muscle_kg": 66.06,
+    "fat_pct": 22.86
+  },
+  {
+    "date": "2024-08-29",
+    "weight": 88.52,
+    "muscle_kg": 64.25,
+    "fat_pct": 23.61
+  },
+  {
+    "date": "2024-08-30",
+    "weight": 88.49,
+    "muscle_kg": 64.09,
+    "fat_pct": 23.78
+  },
+  {
+    "date": "2024-08-31",
+    "weight": 88.55,
+    "muscle_kg": 64.61,
+    "fat_pct": 23.21
+  },
+  {
+    "date": "2024-09-02",
+    "weight": 89.28,
+    "muscle_kg": 64.53,
+    "fat_pct": 23.95
+  },
+  {
+    "date": "2024-09-03",
+    "weight": 88.47,
+    "muscle_kg": 64.33,
+    "fat_pct": 23.48
+  },
+  {
+    "date": "2024-09-04",
+    "weight": 89.38,
+    "muscle_kg": 65.12,
+    "fat_pct": 23.33
+  },
+  {
+    "date": "2024-09-05",
+    "weight": 89.17,
+    "muscle_kg": 64.09,
+    "fat_pct": 24.37
+  },
+  {
+    "date": "2024-09-09",
+    "weight": 90.84,
+    "muscle_kg": 64.24,
+    "fat_pct": 25.59
+  },
+  {
+    "date": "2024-09-10",
+    "weight": 90.54,
+    "muscle_kg": 64.55,
+    "fat_pct": 24.96
+  },
+  {
+    "date": "2024-09-11",
+    "weight": 89.71,
+    "muscle_kg": 64.11,
+    "fat_pct": 24.8
+  },
+  {
+    "date": "2024-09-12",
+    "weight": 89.87,
+    "muscle_kg": 63.98,
+    "fat_pct": 25.08
+  },
+  {
+    "date": "2024-09-13",
+    "weight": 90.62
+  },
+  {
+    "date": "2024-09-15",
+    "weight": 90.45,
+    "muscle_kg": 64.53,
+    "fat_pct": 24.92
+  },
+  {
+    "date": "2024-09-20",
+    "weight": 90.99,
+    "muscle_kg": 64.38,
+    "fat_pct": 25.55
+  },
+  {
+    "date": "2024-09-21",
+    "weight": 90.94,
+    "muscle_kg": 63.93,
+    "fat_pct": 26.02
+  },
+  {
+    "date": "2024-09-22",
+    "weight": 91.94,
+    "muscle_kg": 64.96,
+    "fat_pct": 25.65
+  },
+  {
+    "date": "2024-09-23",
+    "weight": 91.83,
+    "muscle_kg": 64.88,
+    "fat_pct": 25.65
+  },
+  {
+    "date": "2024-09-25",
+    "weight": 90.34,
+    "muscle_kg": 63.06,
+    "fat_pct": 26.54
+  },
+  {
+    "date": "2024-09-26",
+    "weight": 90.86,
+    "muscle_kg": 63.42,
+    "fat_pct": 26.54
+  },
+  {
+    "date": "2024-09-28",
+    "weight": 91.44,
+    "muscle_kg": 64.13,
+    "fat_pct": 26.19
+  },
+  {
+    "date": "2024-09-29",
+    "weight": 91.01,
+    "muscle_kg": 63.45,
+    "fat_pct": 26.62
+  },
+  {
+    "date": "2024-09-30",
+    "weight": 91.62,
+    "muscle_kg": 64.05,
+    "fat_pct": 26.42
+  },
+  {
+    "date": "2024-10-16",
+    "weight": 93.26,
+    "muscle_kg": 64.8,
+    "fat_pct": 26.87
+  },
+  {
+    "date": "2024-10-17",
+    "weight": 93.57,
+    "muscle_kg": 64.32,
+    "fat_pct": 27.66
+  },
+  {
+    "date": "2024-10-18",
+    "weight": 93.51,
+    "muscle_kg": 64.67,
+    "fat_pct": 27.23
+  },
+  {
+    "date": "2024-10-21",
+    "weight": 93.44,
+    "muscle_kg": 64.06,
+    "fat_pct": 27.85
+  },
+  {
+    "date": "2024-10-22",
+    "weight": 93.31,
+    "muscle_kg": 64.33,
+    "fat_pct": 27.44
+  },
+  {
+    "date": "2024-10-23",
+    "weight": 93.77,
+    "muscle_kg": 64.65,
+    "fat_pct": 27.45
+  },
+  {
+    "date": "2024-10-24",
+    "weight": 93.25,
+    "muscle_kg": 64.32,
+    "fat_pct": 27.4
+  },
+  {
+    "date": "2024-10-25",
+    "weight": 93.43,
+    "muscle_kg": 63.76,
+    "fat_pct": 28.18
+  },
+  {
+    "date": "2024-10-26",
+    "weight": 93.91,
+    "muscle_kg": 64.67,
+    "fat_pct": 27.53
+  },
+  {
+    "date": "2024-11-03",
+    "weight": 93.95,
+    "muscle_kg": 68.95,
+    "fat_pct": 22.77
+  },
+  {
+    "date": "2024-11-04",
+    "weight": 93.61,
+    "muscle_kg": 66.36,
+    "fat_pct": 25.4
+  },
+  {
+    "date": "2024-11-06",
+    "weight": 93.58,
+    "muscle_kg": 63.96,
+    "fat_pct": 28.06
+  },
+  {
+    "date": "2024-11-07",
+    "weight": 93.96,
+    "muscle_kg": 63.46,
+    "fat_pct": 28.91
+  },
+  {
+    "date": "2024-11-08",
+    "weight": 94.29,
+    "muscle_kg": 63.69,
+    "fat_pct": 28.9
+  },
+  {
+    "date": "2024-11-09",
+    "weight": 94.06,
+    "muscle_kg": 63.17,
+    "fat_pct": 29.3
+  },
+  {
+    "date": "2024-11-15",
+    "weight": 93.94,
+    "muscle_kg": 63.33,
+    "fat_pct": 29.04
+  },
+  {
+    "date": "2024-11-16",
+    "weight": 93.75,
+    "muscle_kg": 63.24,
+    "fat_pct": 28.99
+  },
+  {
+    "date": "2024-11-17",
+    "weight": 94.94,
+    "muscle_kg": 64.76,
+    "fat_pct": 28.21
+  },
+  {
+    "date": "2024-11-18",
+    "weight": 95.36,
+    "muscle_kg": 64.12,
+    "fat_pct": 29.23
+  },
+  {
+    "date": "2024-11-19",
+    "weight": 94.53,
+    "muscle_kg": 63.83,
+    "fat_pct": 28.92
+  },
+  {
+    "date": "2024-11-20",
+    "weight": 93.77,
+    "muscle_kg": 63.61,
+    "fat_pct": 28.59
+  },
+  {
+    "date": "2024-11-21",
+    "weight": 93.84,
+    "muscle_kg": 63.13,
+    "fat_pct": 29.18
+  },
+  {
+    "date": "2024-11-22",
+    "weight": 93.68,
+    "muscle_kg": 63.12,
+    "fat_pct": 29.09
+  },
+  {
+    "date": "2024-11-23",
+    "weight": 93.82,
+    "muscle_kg": 63.19,
+    "fat_pct": 29.11
+  },
+  {
+    "date": "2024-11-24",
+    "weight": 94.39,
+    "muscle_kg": 64.06,
+    "fat_pct": 28.56
+  },
+  {
+    "date": "2024-11-25",
+    "weight": 94.42,
+    "muscle_kg": 63.38,
+    "fat_pct": 29.34
+  },
+  {
+    "date": "2024-11-26",
+    "weight": 94.43,
+    "muscle_kg": 64.0,
+    "fat_pct": 28.67
+  },
+  {
+    "date": "2024-11-27",
+    "weight": 94.76,
+    "muscle_kg": 63.92,
+    "fat_pct": 29.0
+  },
+  {
+    "date": "2024-11-28",
+    "weight": 93.72,
+    "muscle_kg": 63.72,
+    "fat_pct": 28.43
+  },
+  {
+    "date": "2024-11-29",
+    "weight": 93.37,
+    "muscle_kg": 62.96,
+    "fat_pct": 29.01
+  },
+  {
+    "date": "2024-11-30",
+    "weight": 92.77,
+    "muscle_kg": 62.18,
+    "fat_pct": 29.44
+  },
+  {
+    "date": "2024-12-01",
+    "weight": 93.59,
+    "muscle_kg": 62.8,
+    "fat_pct": 29.35
+  },
+  {
+    "date": "2024-12-02",
+    "weight": 94.22,
+    "muscle_kg": 63.85,
+    "fat_pct": 28.68
+  },
+  {
+    "date": "2024-12-03",
+    "weight": 94.55,
+    "muscle_kg": 64.45,
+    "fat_pct": 28.25
+  },
+  {
+    "date": "2024-12-04",
+    "weight": 94.01,
+    "muscle_kg": 64.8,
+    "fat_pct": 27.47
+  },
+  {
+    "date": "2024-12-05",
+    "weight": 94.41,
+    "muscle_kg": 64.92,
+    "fat_pct": 27.63
+  },
+  {
+    "date": "2024-12-06",
+    "weight": 94.47,
+    "muscle_kg": 64.69,
+    "fat_pct": 27.94
+  },
+  {
+    "date": "2024-12-07",
+    "weight": 93.89,
+    "muscle_kg": 63.81,
+    "fat_pct": 28.47
+  },
+  {
+    "date": "2024-12-08",
+    "weight": 94.76,
+    "muscle_kg": 64.98,
+    "fat_pct": 27.84
+  },
+  {
+    "date": "2024-12-09",
+    "weight": 95.55,
+    "muscle_kg": 64.34,
+    "fat_pct": 29.13
+  },
+  {
+    "date": "2024-12-10",
+    "weight": 94.22,
+    "muscle_kg": 63.98,
+    "fat_pct": 28.54
+  },
+  {
+    "date": "2024-12-11",
+    "weight": 94.61,
+    "muscle_kg": 64.46,
+    "fat_pct": 28.3
+  },
+  {
+    "date": "2024-12-12",
+    "weight": 95.16,
+    "muscle_kg": 64.73,
+    "fat_pct": 28.41
+  },
+  {
+    "date": "2024-12-13",
+    "weight": 94.12,
+    "muscle_kg": 63.72,
+    "fat_pct": 28.74
+  },
+  {
+    "date": "2024-12-14",
+    "weight": 93.62,
+    "muscle_kg": 63.83,
+    "fat_pct": 28.24
+  },
+  {
+    "date": "2024-12-15",
+    "weight": 94.2,
+    "muscle_kg": 64.65,
+    "fat_pct": 27.78
+  },
+  {
+    "date": "2024-12-16",
+    "weight": 94.53,
+    "muscle_kg": 65.25,
+    "fat_pct": 27.36
+  },
+  {
+    "date": "2024-12-17",
+    "weight": 94.45,
+    "muscle_kg": 64.75,
+    "fat_pct": 27.87
+  },
+  {
+    "date": "2024-12-18",
+    "weight": 94.32,
+    "muscle_kg": 64.54,
+    "fat_pct": 27.98
+  },
+  {
+    "date": "2024-12-20",
+    "weight": 95.12,
+    "muscle_kg": 66.23,
+    "fat_pct": 26.72
+  },
+  {
+    "date": "2024-12-21",
+    "weight": 95.11,
+    "muscle_kg": 65.03,
+    "fat_pct": 28.05
+  },
+  {
+    "date": "2024-12-22",
+    "weight": 94.4,
+    "muscle_kg": 64.48,
+    "fat_pct": 28.12
+  },
+  {
+    "date": "2024-12-23",
+    "weight": 94.44,
+    "muscle_kg": 64.49,
+    "fat_pct": 28.14
+  },
+  {
+    "date": "2024-12-24",
+    "weight": 93.82,
+    "muscle_kg": 63.24,
+    "fat_pct": 29.05
+  },
+  {
+    "date": "2024-12-25",
+    "weight": 94.32,
+    "muscle_kg": 64.04,
+    "fat_pct": 28.54
+  },
+  {
+    "date": "2024-12-27",
+    "weight": 95.34,
+    "muscle_kg": 64.62,
+    "fat_pct": 28.68
+  },
+  {
+    "date": "2024-12-28",
+    "weight": 94.13,
+    "muscle_kg": 63.83,
+    "fat_pct": 28.63
+  },
+  {
+    "date": "2024-12-29",
+    "weight": 94.68,
+    "muscle_kg": 64.65,
+    "fat_pct": 28.14
+  },
+  {
+    "date": "2024-12-30",
+    "weight": 94.49,
+    "muscle_kg": 64.06,
+    "fat_pct": 28.64
+  },
+  {
+    "date": "2024-12-31",
+    "weight": 94.86,
+    "muscle_kg": 64.67,
+    "fat_pct": 28.24
+  },
+  {
+    "date": "2025-01-01",
+    "weight": 96.14,
+    "muscle_kg": 66.22,
+    "fat_pct": 27.52
+  },
+  {
+    "date": "2025-01-02",
+    "weight": 95.94,
+    "muscle_kg": 66.05,
+    "fat_pct": 27.56
+  },
+  {
+    "date": "2025-01-03",
+    "weight": 95.61,
+    "muscle_kg": 65.29,
+    "fat_pct": 28.14
+  },
+  {
+    "date": "2025-01-04",
+    "weight": 95.0,
+    "muscle_kg": 64.13,
+    "fat_pct": 28.96
+  },
+  {
+    "date": "2025-01-05",
+    "weight": 94.89,
+    "muscle_kg": 64.55,
+    "fat_pct": 28.4
+  },
+  {
+    "date": "2025-01-06",
+    "weight": 95.03,
+    "muscle_kg": 64.32,
+    "fat_pct": 28.76
+  },
+  {
+    "date": "2025-01-07",
+    "weight": 96.37,
+    "muscle_kg": 66.45,
+    "fat_pct": 27.44
+  },
+  {
+    "date": "2025-01-08",
+    "weight": 95.83,
+    "muscle_kg": 65.39,
+    "fat_pct": 28.19
+  },
+  {
+    "date": "2025-01-09",
+    "weight": 95.48,
+    "muscle_kg": 64.32,
+    "fat_pct": 29.11
+  },
+  {
+    "date": "2025-01-10",
+    "weight": 95.66,
+    "muscle_kg": 64.98,
+    "fat_pct": 28.52
+  },
+  {
+    "date": "2025-01-11",
+    "weight": 95.3,
+    "muscle_kg": 65.05,
+    "fat_pct": 28.16
+  },
+  {
+    "date": "2025-01-12",
+    "weight": 95.14,
+    "muscle_kg": 64.84,
+    "fat_pct": 28.27
+  },
+  {
+    "date": "2025-01-13",
+    "weight": 95.2,
+    "muscle_kg": 64.66,
+    "fat_pct": 28.52
+  },
+  {
+    "date": "2025-01-14",
+    "weight": 94.6,
+    "muscle_kg": 65.01,
+    "fat_pct": 27.68
+  },
+  {
+    "date": "2025-01-15",
+    "weight": 94.75,
+    "muscle_kg": 65.09,
+    "fat_pct": 27.7
+  },
+  {
+    "date": "2025-01-16",
+    "weight": 93.81,
+    "muscle_kg": 64.03,
+    "fat_pct": 28.17
+  },
+  {
+    "date": "2025-01-17",
+    "weight": 94.03,
+    "muscle_kg": 64.42,
+    "fat_pct": 27.89
+  },
+  {
+    "date": "2025-01-18",
+    "weight": 93.71,
+    "muscle_kg": 63.71,
+    "fat_pct": 28.44
+  },
+  {
+    "date": "2025-01-19",
+    "weight": 94.88,
+    "muscle_kg": 65.74,
+    "fat_pct": 27.09
+  },
+  {
+    "date": "2025-01-20",
+    "weight": 94.75,
+    "muscle_kg": 64.47,
+    "fat_pct": 28.39
+  },
+  {
+    "date": "2025-01-21",
+    "weight": 94.2,
+    "muscle_kg": 63.35,
+    "fat_pct": 29.21
+  },
+  {
+    "date": "2025-01-22",
+    "weight": 94.09,
+    "muscle_kg": 63.64,
+    "fat_pct": 28.8
+  },
+  {
+    "date": "2025-01-23",
+    "weight": 94.19,
+    "muscle_kg": 65.12,
+    "fat_pct": 27.24
+  },
+  {
+    "date": "2025-01-24",
+    "weight": 94.92,
+    "muscle_kg": 65.43,
+    "fat_pct": 27.45
+  },
+  {
+    "date": "2025-01-25",
+    "weight": 94.42,
+    "muscle_kg": 64.42,
+    "fat_pct": 28.19
+  },
+  {
+    "date": "2025-01-26",
+    "weight": 94.41,
+    "muscle_kg": 64.78,
+    "fat_pct": 27.79
+  },
+  {
+    "date": "2025-01-27",
+    "weight": 94.51,
+    "muscle_kg": 63.68,
+    "fat_pct": 29.08
+  },
+  {
+    "date": "2025-01-28",
+    "weight": 93.37,
+    "muscle_kg": 63.47,
+    "fat_pct": 28.45
+  },
+  {
+    "date": "2025-01-29",
+    "weight": 94.62,
+    "muscle_kg": 64.5,
+    "fat_pct": 28.26
+  },
+  {
+    "date": "2025-01-30",
+    "weight": 94.52,
+    "muscle_kg": 64.24,
+    "fat_pct": 28.47
+  },
+  {
+    "date": "2025-01-31",
+    "weight": 94.16,
+    "muscle_kg": 63.09,
+    "fat_pct": 29.47
+  },
+  {
+    "date": "2025-02-01",
+    "weight": 94.55,
+    "muscle_kg": 64.93,
+    "fat_pct": 27.74
+  },
+  {
+    "date": "2025-02-02",
+    "weight": 93.75,
+    "muscle_kg": 63.34,
+    "fat_pct": 28.88
+  },
+  {
+    "date": "2025-02-03",
+    "weight": 95.18,
+    "muscle_kg": 64.96,
+    "fat_pct": 28.18
+  },
+  {
+    "date": "2025-02-04",
+    "weight": 94.15,
+    "muscle_kg": 64.43,
+    "fat_pct": 27.98
+  },
+  {
+    "date": "2025-02-05",
+    "weight": 95.11,
+    "muscle_kg": 64.07,
+    "fat_pct": 29.1
+  },
+  {
+    "date": "2025-02-06",
+    "weight": 95.11,
+    "muscle_kg": 63.69,
+    "fat_pct": 29.52
+  },
+  {
+    "date": "2025-02-07",
+    "weight": 95.0,
+    "muscle_kg": 63.93,
+    "fat_pct": 29.17
+  },
+  {
+    "date": "2025-02-08",
+    "weight": 93.8,
+    "muscle_kg": 62.44,
+    "fat_pct": 29.92
+  },
+  {
+    "date": "2025-02-09",
+    "weight": 94.87,
+    "muscle_kg": 64.35,
+    "fat_pct": 28.61
+  },
+  {
+    "date": "2025-02-10",
+    "weight": 95.94,
+    "muscle_kg": 66.23,
+    "fat_pct": 27.35
+  },
+  {
+    "date": "2025-02-11",
+    "weight": 95.76,
+    "muscle_kg": 65.3,
+    "fat_pct": 28.23
+  },
+  {
+    "date": "2025-02-12",
+    "weight": 95.91,
+    "muscle_kg": 66.49,
+    "fat_pct": 27.05
+  },
+  {
+    "date": "2025-02-13",
+    "weight": 96.69,
+    "muscle_kg": 67.49,
+    "fat_pct": 26.56
+  },
+  {
+    "date": "2025-02-14",
+    "weight": 96.5,
+    "muscle_kg": 67.58,
+    "fat_pct": 26.31
+  },
+  {
+    "date": "2025-02-15",
+    "weight": 95.9,
+    "muscle_kg": 67.32,
+    "fat_pct": 26.13
+  },
+  {
+    "date": "2025-02-16",
+    "weight": 96.36,
+    "muscle_kg": 66.51,
+    "fat_pct": 27.38
+  },
+  {
+    "date": "2025-02-17",
+    "weight": 96.56,
+    "muscle_kg": 66.94,
+    "fat_pct": 27.06
+  },
+  {
+    "date": "2025-02-18",
+    "weight": 96.48,
+    "muscle_kg": 66.27,
+    "fat_pct": 27.73
+  },
+  {
+    "date": "2025-02-19",
+    "weight": 95.89,
+    "muscle_kg": 66.74,
+    "fat_pct": 26.76
+  },
+  {
+    "date": "2025-02-20",
+    "weight": 95.2,
+    "muscle_kg": 66.1,
+    "fat_pct": 26.94
+  },
+  {
+    "date": "2025-02-21",
+    "weight": 95.62,
+    "muscle_kg": 66.11,
+    "fat_pct": 27.24
+  },
+  {
+    "date": "2025-02-22",
+    "weight": 95.91,
+    "muscle_kg": 65.91,
+    "fat_pct": 27.68
+  },
+  {
+    "date": "2025-02-23",
+    "weight": 96.03,
+    "muscle_kg": 66.64,
+    "fat_pct": 26.98
+  },
+  {
+    "date": "2025-02-24",
+    "weight": 96.67,
+    "muscle_kg": 65.84,
+    "fat_pct": 28.33
+  },
+  {
+    "date": "2025-02-25",
+    "weight": 96.01,
+    "muscle_kg": 65.47,
+    "fat_pct": 28.24
+  },
+  {
+    "date": "2025-02-26",
+    "weight": 95.75,
+    "muscle_kg": 65.18,
+    "fat_pct": 28.37
+  },
+  {
+    "date": "2025-02-27",
+    "weight": 96.66,
+    "muscle_kg": 66.56,
+    "fat_pct": 27.55
+  },
+  {
+    "date": "2025-02-28",
+    "weight": 96.39,
+    "muscle_kg": 66.51,
+    "fat_pct": 27.39
+  },
+  {
+    "date": "2025-03-01",
+    "weight": 96.11,
+    "muscle_kg": 65.36,
+    "fat_pct": 28.44
+  },
+  {
+    "date": "2025-03-02",
+    "weight": 95.63,
+    "muscle_kg": 65.73,
+    "fat_pct": 27.67
+  },
+  {
+    "date": "2025-03-03",
+    "weight": 96.4,
+    "muscle_kg": 65.4,
+    "fat_pct": 28.61
+  },
+  {
+    "date": "2025-03-04",
+    "weight": 96.92,
+    "muscle_kg": 66.2,
+    "fat_pct": 28.13
+  },
+  {
+    "date": "2025-03-05",
+    "weight": 95.49,
+    "muscle_kg": 63.98,
+    "fat_pct": 29.49
+  },
+  {
+    "date": "2025-03-06",
+    "weight": 94.75,
+    "muscle_kg": 63.07,
+    "fat_pct": 29.92
+  },
+  {
+    "date": "2025-03-07",
+    "weight": 95.48,
+    "muscle_kg": 75.19,
+    "fat_pct": 16.93
+  },
+  {
+    "date": "2025-03-08",
+    "weight": 94.5,
+    "muscle_kg": 62.43,
+    "fat_pct": 30.45
+  },
+  {
+    "date": "2025-03-09",
+    "weight": 94.73,
+    "muscle_kg": 63.26,
+    "fat_pct": 29.71
+  },
+  {
+    "date": "2025-03-10",
+    "weight": 94.16,
+    "muscle_kg": 62.64,
+    "fat_pct": 29.96
+  },
+  {
+    "date": "2025-03-11",
+    "weight": 94.09,
+    "muscle_kg": 62.64,
+    "fat_pct": 29.92
+  },
+  {
+    "date": "2025-03-12",
+    "weight": 94.27,
+    "muscle_kg": 62.9,
+    "fat_pct": 29.77
+  },
+  {
+    "date": "2025-03-13",
+    "weight": 94.38,
+    "muscle_kg": 62.91,
+    "fat_pct": 29.83
+  },
+  {
+    "date": "2025-03-14",
+    "weight": 94.45,
+    "muscle_kg": 64.03,
+    "fat_pct": 28.65
+  },
+  {
+    "date": "2025-03-15",
+    "weight": 94.06,
+    "muscle_kg": 63.37,
+    "fat_pct": 29.09
+  },
+  {
+    "date": "2025-03-16",
+    "weight": 94.08,
+    "muscle_kg": 62.45,
+    "fat_pct": 30.11
+  },
+  {
+    "date": "2025-03-17",
+    "weight": 94.78
+  },
+  {
+    "date": "2025-03-18",
+    "weight": 94.34,
+    "muscle_kg": 62.85,
+    "fat_pct": 29.87
+  },
+  {
+    "date": "2025-03-19",
+    "weight": 95.31,
+    "muscle_kg": 63.83,
+    "fat_pct": 29.52
+  },
+  {
+    "date": "2025-03-20",
+    "weight": 94.29,
+    "muscle_kg": 63.58,
+    "fat_pct": 29.03
+  },
+  {
+    "date": "2025-03-21",
+    "weight": 93.55,
+    "muscle_kg": 62.77,
+    "fat_pct": 29.37
+  },
+  {
+    "date": "2025-03-22",
+    "weight": 93.51,
+    "muscle_kg": 62.94,
+    "fat_pct": 29.14
+  },
+  {
+    "date": "2025-03-23",
+    "weight": 94.85,
+    "muscle_kg": 65.02,
+    "fat_pct": 27.86
+  },
+  {
+    "date": "2025-03-24",
+    "weight": 95.78,
+    "muscle_kg": 65.87,
+    "fat_pct": 27.63
+  },
+  {
+    "date": "2025-03-25",
+    "weight": 96.2,
+    "muscle_kg": 65.81,
+    "fat_pct": 28.0
+  },
+  {
+    "date": "2025-03-26",
+    "weight": 95.91,
+    "muscle_kg": 65.19,
+    "fat_pct": 28.47
+  },
+  {
+    "date": "2025-03-28",
+    "weight": 95.92,
+    "muscle_kg": 64.54,
+    "fat_pct": 29.18
+  },
+  {
+    "date": "2025-03-30",
+    "weight": 96.47,
+    "muscle_kg": 66.45,
+    "fat_pct": 27.51
+  },
+  {
+    "date": "2025-04-01",
+    "weight": 96.43,
+    "muscle_kg": 65.26,
+    "fat_pct": 28.78
+  },
+  {
+    "date": "2025-04-02",
+    "weight": 96.41,
+    "muscle_kg": 65.52,
+    "fat_pct": 28.48
+  },
+  {
+    "date": "2025-04-03",
+    "weight": 95.98,
+    "muscle_kg": 65.0,
+    "fat_pct": 28.73
+  },
+  {
+    "date": "2025-04-04",
+    "weight": 96.49,
+    "muscle_kg": 65.66,
+    "fat_pct": 28.39
+  },
+  {
+    "date": "2025-04-05",
+    "weight": 95.3,
+    "muscle_kg": 66.61,
+    "fat_pct": 26.45
+  },
+  {
+    "date": "2025-04-06",
+    "weight": 95.75,
+    "muscle_kg": 66.0,
+    "fat_pct": 27.47
+  },
+  {
+    "date": "2025-04-07",
+    "weight": 96.21,
+    "muscle_kg": 65.56,
+    "fat_pct": 28.29
+  },
+  {
+    "date": "2025-04-08",
+    "weight": 95.8,
+    "muscle_kg": 64.2,
+    "fat_pct": 29.46
+  },
+  {
+    "date": "2025-04-09",
+    "weight": 95.67,
+    "muscle_kg": 64.43,
+    "fat_pct": 29.11
+  },
+  {
+    "date": "2025-04-10",
+    "weight": 95.73,
+    "muscle_kg": 64.63,
+    "fat_pct": 28.95
+  },
+  {
+    "date": "2025-04-11",
+    "weight": 95.68,
+    "muscle_kg": 63.73,
+    "fat_pct": 29.89
+  },
+  {
+    "date": "2025-04-12",
+    "weight": 95.54,
+    "muscle_kg": 64.48,
+    "fat_pct": 28.97
+  },
+  {
+    "date": "2025-04-13",
+    "weight": 96.24
+  },
+  {
+    "date": "2025-04-14",
+    "weight": 95.56,
+    "muscle_kg": 64.87,
+    "fat_pct": 28.56
+  },
+  {
+    "date": "2025-04-15",
+    "weight": 95.14,
+    "muscle_kg": 64.74,
+    "fat_pct": 28.39
+  },
+  {
+    "date": "2025-04-16",
+    "weight": 95.11,
+    "muscle_kg": 64.86,
+    "fat_pct": 28.23
+  },
+  {
+    "date": "2025-04-17",
+    "weight": 95.84,
+    "muscle_kg": 65.55,
+    "fat_pct": 28.03
+  },
+  {
+    "date": "2025-04-18",
+    "weight": 96.16,
+    "muscle_kg": 65.6,
+    "fat_pct": 28.2
+  },
+  {
+    "date": "2025-04-19",
+    "weight": 96.01,
+    "muscle_kg": 65.64,
+    "fat_pct": 28.05
+  },
+  {
+    "date": "2025-04-20",
+    "weight": 96.7,
+    "muscle_kg": 66.61,
+    "fat_pct": 27.52
+  },
+  {
+    "date": "2025-04-22",
+    "weight": 96.59,
+    "muscle_kg": 65.41,
+    "fat_pct": 28.74
+  },
+  {
+    "date": "2025-04-23",
+    "weight": 95.88,
+    "muscle_kg": 64.59,
+    "fat_pct": 29.11
+  },
+  {
+    "date": "2025-04-24",
+    "weight": 95.25,
+    "muscle_kg": 64.32,
+    "fat_pct": 28.93
+  },
+  {
+    "date": "2025-05-03",
+    "weight": 96.11,
+    "muscle_kg": 69.08,
+    "fat_pct": 24.37
+  },
+  {
+    "date": "2025-05-19",
+    "weight": 97.67,
+    "muscle_kg": 65.0,
+    "fat_pct": 29.97
+  },
+  {
+    "date": "2025-05-21",
+    "weight": 97.49,
+    "muscle_kg": 65.72,
+    "fat_pct": 29.06
+  },
+  {
+    "date": "2025-05-22",
+    "weight": 97.37,
+    "muscle_kg": 65.1,
+    "fat_pct": 29.64
+  },
+  {
+    "date": "2025-05-23",
+    "weight": 97.07,
+    "muscle_kg": 64.79,
+    "fat_pct": 29.75
+  },
+  {
+    "date": "2025-05-24",
+    "weight": 96.73,
+    "muscle_kg": 64.68,
+    "fat_pct": 29.62
+  },
+  {
+    "date": "2025-05-25",
+    "weight": 96.78,
+    "muscle_kg": 65.49,
+    "fat_pct": 28.8
+  },
+  {
+    "date": "2025-05-26",
+    "weight": 98.34,
+    "muscle_kg": 65.84,
+    "fat_pct": 29.55
+  },
+  {
+    "date": "2025-05-27",
+    "weight": 97.53,
+    "muscle_kg": 65.39,
+    "fat_pct": 29.45
+  },
+  {
+    "date": "2025-05-28",
+    "weight": 97.69,
+    "muscle_kg": 65.27,
+    "fat_pct": 29.69
+  },
+  {
+    "date": "2025-06-01",
+    "weight": 98.24,
+    "muscle_kg": 66.72,
+    "fat_pct": 28.53
+  },
+  {
+    "date": "2025-06-02",
+    "weight": 97.47,
+    "muscle_kg": 65.04,
+    "fat_pct": 29.77
+  },
+  {
+    "date": "2025-06-03",
+    "weight": 96.67,
+    "muscle_kg": 64.48,
+    "fat_pct": 29.8
+  },
+  {
+    "date": "2025-06-04",
+    "weight": 97.03,
+    "muscle_kg": 65.59,
+    "fat_pct": 28.87
+  },
+  {
+    "date": "2025-06-05",
+    "weight": 97.49,
+    "muscle_kg": 66.53,
+    "fat_pct": 28.19
+  },
+  {
+    "date": "2025-06-06",
+    "weight": 97.28,
+    "muscle_kg": 65.42,
+    "fat_pct": 29.23
+  },
+  {
+    "date": "2025-06-07",
+    "weight": 96.41,
+    "muscle_kg": 65.24,
+    "fat_pct": 28.79
+  },
+  {
+    "date": "2025-06-08",
+    "weight": 96.08,
+    "muscle_kg": 65.45,
+    "fat_pct": 28.32
+  },
+  {
+    "date": "2025-06-09",
+    "weight": 97.47,
+    "muscle_kg": 67.0,
+    "fat_pct": 27.67
+  },
+  {
+    "date": "2025-06-10",
+    "weight": 96.2,
+    "muscle_kg": 65.66,
+    "fat_pct": 28.17
+  },
+  {
+    "date": "2025-06-11",
+    "weight": 96.29,
+    "muscle_kg": 64.89,
+    "fat_pct": 29.08
+  },
+  {
+    "date": "2025-06-12",
+    "weight": 96.59,
+    "muscle_kg": 66.38,
+    "fat_pct": 27.69
+  },
+  {
+    "date": "2025-06-13",
+    "weight": 97.13,
+    "muscle_kg": 65.47,
+    "fat_pct": 29.07
+  },
+  {
+    "date": "2025-06-14",
+    "weight": 97.03,
+    "muscle_kg": 65.66,
+    "fat_pct": 28.79
+  },
+  {
+    "date": "2025-06-15",
+    "weight": 98.39,
+    "muscle_kg": 67.86,
+    "fat_pct": 27.43
+  },
+  {
+    "date": "2025-06-17",
+    "weight": 97.43,
+    "muscle_kg": 66.66,
+    "fat_pct": 28.01
+  },
+  {
+    "date": "2025-06-18",
+    "weight": 98.13,
+    "muscle_kg": 67.19,
+    "fat_pct": 27.95
+  },
+  {
+    "date": "2025-06-19",
+    "weight": 97.71
+  },
+  {
+    "date": "2025-06-20",
+    "weight": 97.39,
+    "muscle_kg": 64.69,
+    "fat_pct": 30.09
+  },
+  {
+    "date": "2025-06-21",
+    "weight": 96.76,
+    "muscle_kg": 65.94,
+    "fat_pct": 28.3
+  },
+  {
+    "date": "2025-06-22",
+    "weight": 97.55,
+    "muscle_kg": 67.55,
+    "fat_pct": 27.14
+  },
+  {
+    "date": "2025-06-23",
+    "weight": 97.35,
+    "muscle_kg": 66.63,
+    "fat_pct": 27.98
+  },
+  {
+    "date": "2025-06-24",
+    "weight": 97.97,
+    "muscle_kg": 68.04,
+    "fat_pct": 26.93
+  },
+  {
+    "date": "2025-06-25",
+    "weight": 97.84,
+    "muscle_kg": 66.99,
+    "fat_pct": 27.95
+  },
+  {
+    "date": "2025-06-27",
+    "weight": 97.83,
+    "muscle_kg": 65.41,
+    "fat_pct": 29.63
+  },
+  {
+    "date": "2025-06-28",
+    "weight": 97.62,
+    "muscle_kg": 66.27,
+    "fat_pct": 28.56
+  },
+  {
+    "date": "2025-06-29",
+    "weight": 98.65,
+    "muscle_kg": 67.96,
+    "fat_pct": 27.51
+  },
+  {
+    "date": "2025-07-01",
+    "weight": 97.7,
+    "muscle_kg": 65.4,
+    "fat_pct": 29.56
+  },
+  {
+    "date": "2025-07-02",
+    "weight": 97.88,
+    "muscle_kg": 66.59,
+    "fat_pct": 28.42
+  },
+  {
+    "date": "2025-07-03",
+    "weight": 97.45,
+    "muscle_kg": 65.84,
+    "fat_pct": 28.9
+  },
+  {
+    "date": "2025-07-04",
+    "weight": 97.2,
+    "muscle_kg": 65.06,
+    "fat_pct": 29.56
+  },
+  {
+    "date": "2025-07-05",
+    "weight": 97.11,
+    "muscle_kg": 65.25,
+    "fat_pct": 29.29
+  },
+  {
+    "date": "2025-07-07",
+    "weight": 98.3,
+    "muscle_kg": 66.03,
+    "fat_pct": 29.31
+  },
+  {
+    "date": "2025-07-09",
+    "weight": 97.44,
+    "muscle_kg": 65.09,
+    "fat_pct": 29.69
+  },
+  {
+    "date": "2025-07-11",
+    "weight": 98.05,
+    "muscle_kg": 65.37,
+    "fat_pct": 29.83
+  },
+  {
+    "date": "2025-07-14",
+    "weight": 98.7,
+    "muscle_kg": 67.56,
+    "fat_pct": 27.98
+  },
+  {
+    "date": "2025-07-15",
+    "weight": 97.59,
+    "muscle_kg": 66.27,
+    "fat_pct": 28.54
+  },
+  {
+    "date": "2025-07-16",
+    "weight": 97.14,
+    "muscle_kg": 66.06,
+    "fat_pct": 28.43
+  },
+  {
+    "date": "2025-07-17",
+    "weight": 95.95,
+    "muscle_kg": 65.16,
+    "fat_pct": 28.54
+  },
+  {
+    "date": "2025-07-18",
+    "weight": 95.88,
+    "muscle_kg": 64.82,
+    "fat_pct": 28.85
+  },
+  {
+    "date": "2025-07-19",
+    "weight": 96.95,
+    "muscle_kg": 65.97,
+    "fat_pct": 28.4
+  },
+  {
+    "date": "2025-07-20",
+    "weight": 96.26,
+    "muscle_kg": 65.66,
+    "fat_pct": 28.22
+  },
+  {
+    "date": "2025-07-21",
+    "weight": 97.96
+  },
+  {
+    "date": "2025-07-26",
+    "weight": 96.84,
+    "muscle_kg": 65.22,
+    "fat_pct": 29.13
+  },
+  {
+    "date": "2025-07-28",
+    "weight": 97.83,
+    "muscle_kg": 67.93,
+    "fat_pct": 26.94
+  },
+  {
+    "date": "2025-07-29",
+    "weight": 98.16
+  },
+  {
+    "date": "2025-08-01",
+    "weight": 97.46
+  },
+  {
+    "date": "2025-08-03",
+    "weight": 97.85,
+    "muscle_kg": 66.64,
+    "fat_pct": 28.34
+  },
+  {
+    "date": "2025-08-07",
+    "weight": 97.95
+  },
+  {
+    "date": "2025-08-09",
+    "weight": 98.04,
+    "muscle_kg": 66.74,
+    "fat_pct": 28.37
+  },
+  {
+    "date": "2025-08-10",
+    "weight": 98.56,
+    "muscle_kg": 66.33,
+    "fat_pct": 29.18
+  },
+  {
+    "date": "2025-08-11",
+    "weight": 98.0,
+    "muscle_kg": 66.25,
+    "fat_pct": 28.86
+  },
+  {
+    "date": "2025-08-27",
+    "weight": 99.52,
+    "muscle_kg": 69.69,
+    "fat_pct": 26.33
+  },
+  {
+    "date": "2025-08-28",
+    "weight": 100.1,
+    "muscle_kg": 70.83,
+    "fat_pct": 25.55
+  },
+  {
+    "date": "2025-08-29",
+    "weight": 98.94,
+    "muscle_kg": 65.32,
+    "fat_pct": 30.51
+  },
+  {
+    "date": "2025-08-30",
+    "weight": 99.03,
+    "muscle_kg": 65.05,
+    "fat_pct": 30.87
+  },
+  {
+    "date": "2025-08-31",
+    "weight": 99.67,
+    "muscle_kg": 67.64,
+    "fat_pct": 28.59
+  },
+  {
+    "date": "2025-09-01",
+    "weight": 99.48
+  },
+  {
+    "date": "2025-09-02",
+    "weight": 99.58,
+    "muscle_kg": 67.97,
+    "fat_pct": 28.18
+  },
+  {
+    "date": "2025-09-03",
+    "weight": 99.6,
+    "muscle_kg": 68.26,
+    "fat_pct": 27.89
+  },
+  {
+    "date": "2025-09-05",
+    "weight": 99.06,
+    "muscle_kg": 68.23,
+    "fat_pct": 27.53
+  },
+  {
+    "date": "2025-09-08",
+    "weight": 99.59,
+    "muscle_kg": 67.54,
+    "fat_pct": 28.64
+  },
+  {
+    "date": "2025-09-11",
+    "weight": 98.06,
+    "muscle_kg": 68.99,
+    "fat_pct": 25.97
+  },
+  {
+    "date": "2025-10-04",
+    "weight": 97.83,
+    "muscle_kg": 64.84,
+    "fat_pct": 30.25
+  },
+  {
+    "date": "2025-10-07",
+    "weight": 98.76,
+    "muscle_kg": 64.66,
+    "fat_pct": 31.1
+  },
+  {
+    "date": "2025-10-16",
+    "weight": 100.11,
+    "muscle_kg": 67.17,
+    "fat_pct": 29.39
+  },
+  {
+    "date": "2025-10-20",
+    "weight": 99.97,
+    "muscle_kg": 65.26,
+    "fat_pct": 31.3
+  },
+  {
+    "date": "2025-10-21",
+    "weight": 100.26,
+    "muscle_kg": 65.95,
+    "fat_pct": 30.78
+  },
+  {
+    "date": "2025-10-27",
+    "weight": 100.38,
+    "muscle_kg": 65.66,
+    "fat_pct": 31.16
+  },
+  {
+    "date": "2025-10-30",
+    "weight": 99.5,
+    "muscle_kg": 64.35,
+    "fat_pct": 31.93
+  },
+  {
+    "date": "2025-10-31",
+    "weight": 99.0,
+    "muscle_kg": 63.38,
+    "fat_pct": 32.6
+  },
+  {
+    "date": "2025-11-01",
+    "weight": 99.36,
+    "muscle_kg": 63.97,
+    "fat_pct": 32.22
+  },
+  {
+    "date": "2025-11-02",
+    "weight": 99.72,
+    "muscle_kg": 64.58,
+    "fat_pct": 31.84
+  },
+  {
+    "date": "2025-11-07",
+    "weight": 100.06,
+    "muscle_kg": 64.68,
+    "fat_pct": 31.96
+  },
+  {
+    "date": "2025-11-21",
+    "weight": 100.92
+  },
+  {
+    "date": "2025-11-23",
+    "weight": 101.12,
+    "muscle_kg": 65.72,
+    "fat_pct": 31.61
+  },
+  {
+    "date": "2025-11-25",
+    "weight": 101.01,
+    "muscle_kg": 65.56,
+    "fat_pct": 31.69
+  },
+  {
+    "date": "2025-11-26",
+    "weight": 100.55,
+    "muscle_kg": 65.22,
+    "fat_pct": 31.73
+  },
+  {
+    "date": "2025-11-27",
+    "weight": 100.13,
+    "muscle_kg": 64.3,
+    "fat_pct": 32.4
+  },
+  {
+    "date": "2025-11-28",
+    "weight": 100.01,
+    "muscle_kg": 65.03,
+    "fat_pct": 31.57
+  },
+  {
+    "date": "2025-11-29",
+    "weight": 99.5,
+    "muscle_kg": 65.13,
+    "fat_pct": 31.12
+  },
+  {
+    "date": "2025-11-30",
+    "weight": 99.3,
+    "muscle_kg": 64.68,
+    "fat_pct": 31.44
+  },
+  {
+    "date": "2025-12-01",
+    "weight": 99.92,
+    "muscle_kg": 64.95,
+    "fat_pct": 31.59
+  },
+  {
+    "date": "2025-12-02",
+    "weight": 99.91,
+    "muscle_kg": 65.53,
+    "fat_pct": 30.97
+  },
+  {
+    "date": "2025-12-03",
+    "weight": 99.51,
+    "muscle_kg": 64.41,
+    "fat_pct": 31.87
+  },
+  {
+    "date": "2025-12-04",
+    "weight": 99.11,
+    "muscle_kg": 64.3,
+    "fat_pct": 31.7
+  },
+  {
+    "date": "2025-12-05",
+    "weight": 99.27,
+    "muscle_kg": 64.39,
+    "fat_pct": 31.73
+  },
+  {
+    "date": "2025-12-06",
+    "weight": 99.0,
+    "muscle_kg": 64.23,
+    "fat_pct": 31.72
+  },
+  {
+    "date": "2025-12-07",
+    "weight": 99.86,
+    "muscle_kg": 66.25,
+    "fat_pct": 30.18
+  },
+  {
+    "date": "2025-12-08",
+    "weight": 99.04,
+    "muscle_kg": 64.09,
+    "fat_pct": 31.89
+  },
+  {
+    "date": "2025-12-09",
+    "weight": 98.37,
+    "muscle_kg": 63.2,
+    "fat_pct": 32.37
+  },
+  {
+    "date": "2025-12-10",
+    "weight": 98.81,
+    "muscle_kg": 63.08,
+    "fat_pct": 32.79
+  },
+  {
+    "date": "2025-12-11",
+    "weight": 99.07,
+    "muscle_kg": 64.52,
+    "fat_pct": 31.45
+  },
+  {
+    "date": "2025-12-12",
+    "weight": 98.81,
+    "muscle_kg": 64.49,
+    "fat_pct": 31.3
+  },
+  {
+    "date": "2025-12-13",
+    "weight": 98.6,
+    "muscle_kg": 63.7,
+    "fat_pct": 31.98
+  },
+  {
+    "date": "2025-12-14",
+    "weight": 98.63,
+    "muscle_kg": 64.13,
+    "fat_pct": 31.56
+  },
+  {
+    "date": "2025-12-15",
+    "weight": 98.44,
+    "muscle_kg": 64.04,
+    "fat_pct": 31.52
+  },
+  {
+    "date": "2025-12-16",
+    "weight": 98.45,
+    "muscle_kg": 63.76,
+    "fat_pct": 31.82
+  },
+  {
+    "date": "2025-12-17",
+    "weight": 98.41,
+    "muscle_kg": 63.69,
+    "fat_pct": 31.87
+  },
+  {
+    "date": "2025-12-18",
+    "weight": 98.67,
+    "muscle_kg": 64.27,
+    "fat_pct": 31.43
+  },
+  {
+    "date": "2025-12-19",
+    "weight": 98.42,
+    "muscle_kg": 64.81,
+    "fat_pct": 30.69
+  },
+  {
+    "date": "2025-12-20",
+    "weight": 98.96,
+    "muscle_kg": 65.57,
+    "fat_pct": 30.26
+  },
+  {
+    "date": "2025-12-21",
+    "weight": 98.28,
+    "muscle_kg": 64.58,
+    "fat_pct": 30.85
+  },
+  {
+    "date": "2025-12-22",
+    "weight": 99.05,
+    "muscle_kg": 65.0,
+    "fat_pct": 30.93
+  },
+  {
+    "date": "2025-12-23",
+    "weight": 99.03,
+    "muscle_kg": 65.28,
+    "fat_pct": 30.62
+  },
+  {
+    "date": "2025-12-24",
+    "weight": 99.53,
+    "muscle_kg": 65.33,
+    "fat_pct": 30.91
+  },
+  {
+    "date": "2025-12-25",
+    "weight": 99.58,
+    "muscle_kg": 65.7,
+    "fat_pct": 30.57
+  },
+  {
+    "date": "2025-12-26",
+    "weight": 100.27,
+    "muscle_kg": 67.25,
+    "fat_pct": 29.43
+  },
+  {
+    "date": "2025-12-27",
+    "weight": 99.7,
+    "muscle_kg": 64.92,
+    "fat_pct": 31.47
+  },
+  {
+    "date": "2025-12-28",
+    "weight": 99.56,
+    "muscle_kg": 63.96,
+    "fat_pct": 32.36
+  },
+  {
+    "date": "2025-12-29",
+    "weight": 99.53,
+    "muscle_kg": 65.26,
+    "fat_pct": 30.98
+  },
+  {
+    "date": "2025-12-30",
+    "weight": 100.0,
+    "muscle_kg": 65.67,
+    "fat_pct": 30.88
+  },
+  {
+    "date": "2025-12-31",
+    "weight": 100.53,
+    "muscle_kg": 66.4,
+    "fat_pct": 30.5
+  },
+  {
+    "date": "2026-01-02",
+    "weight": 99.68,
+    "muscle_kg": 64.7,
+    "fat_pct": 31.68
+  },
+  {
+    "date": "2026-01-03",
+    "weight": 100.26,
+    "muscle_kg": 65.48,
+    "fat_pct": 31.26
+  },
+  {
+    "date": "2026-01-04",
+    "weight": 100.57,
+    "muscle_kg": 66.4,
+    "fat_pct": 30.52
+  },
+  {
+    "date": "2026-01-05",
+    "weight": 100.88,
+    "muscle_kg": 65.46,
+    "fat_pct": 31.71
+  },
+  {
+    "date": "2026-01-06",
+    "weight": 100.61,
+    "muscle_kg": 66.85,
+    "fat_pct": 30.08
+  },
+  {
+    "date": "2026-01-07",
+    "weight": 100.31,
+    "muscle_kg": 65.04,
+    "fat_pct": 31.75
+  },
+  {
+    "date": "2026-01-08",
+    "weight": 100.7,
+    "muscle_kg": 66.34,
+    "fat_pct": 30.67
+  },
+  {
+    "date": "2026-01-09",
+    "weight": 100.46,
+    "muscle_kg": 66.09,
+    "fat_pct": 30.77
+  },
+  {
+    "date": "2026-01-13",
+    "weight": 100.58,
+    "muscle_kg": 65.36,
+    "fat_pct": 31.61
+  },
+  {
+    "date": "2026-01-14",
+    "weight": 100.68
+  },
+  {
+    "date": "2026-01-16",
+    "weight": 100.67,
+    "muscle_kg": 65.82,
+    "fat_pct": 31.2
+  },
+  {
+    "date": "2026-01-17",
+    "weight": 100.71,
+    "muscle_kg": 66.49,
+    "fat_pct": 30.52
+  },
+  {
+    "date": "2026-01-19",
+    "weight": 101.61,
+    "muscle_kg": 65.36,
+    "fat_pct": 32.29
+  },
+  {
+    "date": "2026-01-22",
+    "weight": 101.39
+  },
+  {
+    "date": "2026-01-23",
+    "weight": 101.51,
+    "muscle_kg": 65.51,
+    "fat_pct": 32.08
+  },
+  {
+    "date": "2026-01-24",
+    "weight": 100.93,
+    "muscle_kg": 65.09,
+    "fat_pct": 32.12
+  },
+  {
+    "date": "2026-01-25",
+    "weight": 100.89,
+    "muscle_kg": 65.91,
+    "fat_pct": 31.24
+  },
+  {
+    "date": "2026-01-26",
+    "weight": 101.68,
+    "muscle_kg": 66.13,
+    "fat_pct": 31.56
+  },
+  {
+    "date": "2026-01-27",
+    "weight": 101.18,
+    "muscle_kg": 66.08,
+    "fat_pct": 31.27
+  },
+  {
+    "date": "2026-01-28",
+    "weight": 101.42,
+    "muscle_kg": 66.18,
+    "fat_pct": 31.34
+  },
+  {
+    "date": "2026-02-22",
+    "weight": 101.66,
+    "muscle_kg": 68.19,
+    "fat_pct": 29.42
+  },
+  {
+    "date": "2026-02-24",
+    "weight": 101.01,
+    "muscle_kg": 63.19,
+    "fat_pct": 34.12
+  },
+  {
+    "date": "2026-02-25",
+    "weight": 100.93,
+    "muscle_kg": 64.09,
+    "fat_pct": 33.14
+  },
+  {
+    "date": "2026-02-27",
+    "weight": 100.72,
+    "muscle_kg": 64.24,
+    "fat_pct": 32.86
+  },
+  {
+    "date": "2026-02-28",
+    "weight": 101.05,
+    "muscle_kg": 64.93,
+    "fat_pct": 32.36
+  },
+  {
+    "date": "2026-03-01",
+    "weight": 100.58,
+    "muscle_kg": 63.78,
+    "fat_pct": 33.24
+  },
+  {
+    "date": "2026-03-02",
+    "weight": 101.37,
+    "muscle_kg": 64.8,
+    "fat_pct": 32.71
+  },
+  {
+    "date": "2026-03-04",
+    "weight": 100.25,
+    "muscle_kg": 63.83,
+    "fat_pct": 32.97
+  },
+  {
+    "date": "2026-03-05",
+    "weight": 100.64,
+    "muscle_kg": 64.44,
+    "fat_pct": 32.59
+  },
+  {
+    "date": "2026-03-06",
+    "weight": 100.9,
+    "muscle_kg": 64.01,
+    "fat_pct": 33.22
+  },
+  {
+    "date": "2026-03-07",
+    "weight": 100.84,
+    "muscle_kg": 64.83,
+    "fat_pct": 32.33
+  },
+  {
+    "date": "2026-03-12",
+    "weight": 101.39,
+    "muscle_kg": 67.3,
+    "fat_pct": 30.15
+  },
+  {
+    "date": "2026-03-13",
+    "weight": 100.98,
+    "muscle_kg": 65.82,
+    "fat_pct": 31.4
+  },
+  {
+    "date": "2026-03-14",
+    "weight": 101.26,
+    "muscle_kg": 65.62,
+    "fat_pct": 31.8
+  },
+  {
+    "date": "2026-03-15",
+    "weight": 101.8,
+    "muscle_kg": 64.66,
+    "fat_pct": 33.13
+  },
+  {
+    "date": "2026-03-16",
+    "weight": 101.52,
+    "muscle_kg": 65.1,
+    "fat_pct": 32.5
+  },
+  {
+    "date": "2026-03-17",
+    "weight": 101.35,
+    "muscle_kg": 65.02,
+    "fat_pct": 32.47
+  },
+  {
+    "date": "2026-03-18",
+    "weight": 101.12,
+    "muscle_kg": 65.61,
+    "fat_pct": 31.72
+  },
+  {
+    "date": "2026-03-19",
+    "weight": 101.06,
+    "muscle_kg": 63.94,
+    "fat_pct": 33.4
+  },
+  {
+    "date": "2026-03-20",
+    "weight": 101.39,
+    "muscle_kg": 65.02,
+    "fat_pct": 32.51
+  },
+  {
+    "date": "2026-03-21",
+    "weight": 100.58,
+    "muscle_kg": 64.44,
+    "fat_pct": 32.56
+  },
+  {
+    "date": "2026-03-22",
+    "weight": 101.03,
+    "muscle_kg": 64.24,
+    "fat_pct": 33.06
+  },
+  {
+    "date": "2026-03-23",
+    "weight": 101.67
+  },
+  {
+    "date": "2026-03-24",
+    "weight": 101.56,
+    "muscle_kg": 65.95,
+    "fat_pct": 31.66
+  },
+  {
+    "date": "2026-03-25",
+    "weight": 101.79,
+    "muscle_kg": 66.05,
+    "fat_pct": 31.71
+  },
+  {
+    "date": "2026-03-26",
+    "weight": 101.24,
+    "muscle_kg": 65.84,
+    "fat_pct": 31.56
+  },
+  {
+    "date": "2026-03-27",
+    "weight": 100.25,
+    "muscle_kg": 65.16,
+    "fat_pct": 31.59
+  },
+  {
+    "date": "2026-03-28",
+    "weight": 100.25,
+    "muscle_kg": 63.01,
+    "fat_pct": 33.81
+  },
+  {
+    "date": "2026-03-29",
+    "weight": 100.83,
+    "muscle_kg": 66.25,
+    "fat_pct": 30.85
+  },
+  {
+    "date": "2026-03-30",
+    "weight": 101.02,
+    "muscle_kg": 66.2,
+    "fat_pct": 31.03
+  },
+  {
+    "date": "2026-03-31",
+    "weight": 100.39,
+    "muscle_kg": 65.61,
+    "fat_pct": 31.21
+  },
+  {
+    "date": "2026-04-01",
+    "weight": 100.39,
+    "muscle_kg": 65.47,
+    "fat_pct": 31.37
+  },
+  {
+    "date": "2026-04-02",
+    "weight": 99.66,
+    "muscle_kg": 63.73,
+    "fat_pct": 32.68
+  },
+  {
+    "date": "2026-04-03",
+    "weight": 99.7,
+    "muscle_kg": 63.73,
+    "fat_pct": 32.71
+  },
+  {
+    "date": "2026-04-04",
+    "weight": 100.18,
+    "muscle_kg": 65.23,
+    "fat_pct": 31.47
+  },
+  {
+    "date": "2026-04-05",
+    "weight": 100.38,
+    "muscle_kg": 65.61,
+    "fat_pct": 31.2
+  },
+  {
+    "date": "2026-04-06",
+    "weight": 101.76,
+    "muscle_kg": 69.19,
+    "fat_pct": 28.47
+  },
+  {
+    "date": "2026-04-07",
+    "weight": 99.98,
+    "muscle_kg": 64.62,
+    "fat_pct": 31.97
+  },
+  {
+    "date": "2026-04-08",
+    "weight": 99.78,
+    "muscle_kg": 63.95,
+    "fat_pct": 32.53
+  },
+  {
+    "date": "2026-04-09",
+    "weight": 99.99,
+    "muscle_kg": 64.98,
+    "fat_pct": 31.6
+  },
+  {
+    "date": "2026-04-10",
+    "weight": 99.37,
+    "muscle_kg": 63.41,
+    "fat_pct": 32.81
+  },
+  {
+    "date": "2026-04-11",
+    "weight": 100.11,
+    "muscle_kg": 65.13,
+    "fat_pct": 31.52
+  },
+  {
+    "date": "2026-04-12",
+    "weight": 99.69,
+    "muscle_kg": 65.89,
+    "fat_pct": 30.44
+  },
+  {
+    "date": "2026-04-13",
+    "weight": 99.97,
+    "muscle_kg": 65.34,
+    "fat_pct": 31.21
+  },
+  {
+    "date": "2026-04-14",
+    "weight": 99.45,
+    "muscle_kg": 64.79,
+    "fat_pct": 31.43
+  },
+  {
+    "date": "2026-04-15",
+    "weight": 98.7,
+    "muscle_kg": 63.45,
+    "fat_pct": 32.32
+  }
+]
