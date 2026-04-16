@@ -107,8 +107,12 @@ Go to **claude.ai/code/routines** → **New routine** and configure:
 |---|---|
 | **Name** | `withings-dashboard-refresh` |
 | **Schedule** | Daily |
-| **Repository** | this repo, with **unrestricted branch pushes** enabled |
-| **Setup script** | `pip install -r requirements.txt` |
+| **Repository** | this repo — **enable "Allow unrestricted branch pushes"** |
+| **Setup script** | `pip install requests python-dotenv azure-storage-blob` |
+
+> **Why "Allow unrestricted branch pushes"?** By default Routines only push
+> to `claude/`-prefixed branches and open a PR. Enabling this option lets the
+> Routine commit directly to `main`, which is what the script does.
 
 **Environment variables** (set in the Routine's environment config):
 
@@ -122,12 +126,11 @@ Go to **claude.ai/code/routines** → **New routine** and configure:
 **Routine prompt:**
 
 ```
-Run `python scripts/fetch_and_build.py` to fetch the latest Withings
-measurements and update docs/data.json.
-
-Then commit docs/data.json to the main branch with the message
-"chore: update Withings data" and push.
+Run `bash scripts/run_routine.sh`
 ```
+
+That script fetches the data, rotates the token, commits `docs/data.json`,
+and pushes to `main` — no interpretation needed.
 
 ### 9. Trigger the routine manually first
 
@@ -141,7 +144,8 @@ In claude.ai/code/routines, hit **Run now** to verify everything works.
 withings-dashboard/
 ├── scripts/
 │   ├── auth_setup.py          # one-time local OAuth + Blob Storage seed
-│   └── fetch_and_build.py     # runs in Claude Code Routine
+│   ├── fetch_and_build.py     # fetches data, rotates token
+│   └── run_routine.sh         # called by the Routine — fetch + git commit
 ├── docs/
 │   ├── index.html             # dashboard (Chart.js, no build step)
 │   └── data.json              # generated — do not edit manually
