@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,22 +8,83 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script>
+    /* Set theme before paint to avoid flash */
+    (function(){
+      const t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg:     #07090f;
-      --s1:     #0d1117;
-      --s2:     #161b27;
-      --border: #1e2533;
-      --text:   #e6edf3;
-      --muted:  #7d8590;
-      --accent: #4f8ef7;
-      --green:  #3fb950;
-      --red:    #f85149;
-      --purple: #a371f7;
+    /* ── THEME TOKENS ──────────────────────────────────── */
+    [data-theme="dark"] {
+      --bg:      #07090f;
+      --s1:      #0d1117;
+      --s2:      #161b27;
+      --border:  #1e2533;
+      --text:    #e6edf3;
+      --muted:   #7d8590;
+      --accent:  #4f8ef7;
+      --green:   #3fb950;
+      --red:     #f85149;
+      --purple:  #a371f7;
+      --amber:   #e3b341;
+      --chart-grid: #1e2533;
+      --tooltip-bg: #161b27;
+      --swatch:  #4f8ef7;
+    }
+    [data-theme="midnight"] {
+      --bg:      #05060d;
+      --s1:      #0b0d1a;
+      --s2:      #131628;
+      --border:  #1e2040;
+      --text:    #e2e4f0;
+      --muted:   #6b7099;
+      --accent:  #a78bfa;
+      --green:   #34d399;
+      --red:     #f87171;
+      --purple:  #c084fc;
+      --amber:   #fbbf24;
+      --chart-grid: #1a1d35;
+      --tooltip-bg: #131628;
+      --swatch:  #a78bfa;
+    }
+    [data-theme="light"] {
+      --bg:      #f6f8fa;
+      --s1:      #ffffff;
+      --s2:      #f0f4f8;
+      --border:  #d0d7de;
+      --text:    #1f2328;
+      --muted:   #57606a;
+      --accent:  #0d9488;
+      --green:   #1a7f37;
+      --red:     #cf222e;
+      --purple:  #8250df;
+      --amber:   #9a6700;
+      --chart-grid: #e8ecef;
+      --tooltip-bg: #ffffff;
+      --swatch:  #0d9488;
+    }
+    [data-theme="amber"] {
+      --bg:      #0f0b05;
+      --s1:      #1a1208;
+      --s2:      #241a0c;
+      --border:  #3d2e14;
+      --text:    #f5e6c8;
+      --muted:   #9c8260;
+      --accent:  #f59e0b;
+      --green:   #65a30d;
+      --red:     #dc2626;
+      --purple:  #c084fc;
+      --amber:   #f59e0b;
+      --chart-grid: #2e2010;
+      --tooltip-bg: #1a1208;
+      --swatch:  #f59e0b;
     }
 
+    /* ── BASE ──────────────────────────────────────────── */
     body {
       background: var(--bg);
       color: var(--text);
@@ -31,162 +92,300 @@
       min-height: 100vh;
       font-size: 14px;
       line-height: 1.5;
+      transition: background 0.2s, color 0.2s;
     }
 
-    /* ── Header ─────────────────────────────────────── */
+    /* ── HEADER ────────────────────────────────────────── */
     header {
-      position: sticky; top: 0; z-index: 10;
-      background: rgba(7, 9, 15, 0.88);
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      padding: 0.85rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       display: flex; align-items: center;
-      justify-content: space-between; gap: 1rem;
+      justify-content: space-between; gap: 0.75rem;
     }
+    .h-brand { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+    .h-icon  { font-size: 1.1rem; flex-shrink: 0; }
+    .h-title { font-size: 0.9rem; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+    .h-sub   { font-size: 0.68rem; color: var(--muted); margin-top: 1px; white-space: nowrap; }
 
-    .h-title { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em; }
-    .h-sub   { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+    .h-controls { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
+    /* range pills */
     .range-pills {
       display: flex; gap: 2px;
       background: var(--s1); border: 1px solid var(--border);
-      border-radius: 8px; padding: 3px; flex-shrink: 0;
+      border-radius: 8px; padding: 3px;
     }
     .range-pills button {
       background: none; border: none; color: var(--muted);
-      border-radius: 5px; padding: 5px 13px;
-      font: 500 0.78rem/1 'Inter', sans-serif;
+      border-radius: 5px; padding: 5px 11px;
+      font: 500 0.75rem/1 'Inter', sans-serif;
       cursor: pointer; transition: background 0.12s, color 0.12s;
     }
     .range-pills button.active { background: var(--s2); color: var(--text); }
     .range-pills button:hover:not(.active) { color: var(--text); }
 
-    /* ── Layout ─────────────────────────────────────── */
+    /* theme switcher */
+    .theme-btn {
+      background: var(--s1); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 8px;
+      cursor: pointer; color: var(--muted);
+      font-size: 0.95rem; line-height: 1;
+      position: relative; transition: color 0.12s;
+    }
+    .theme-btn:hover { color: var(--text); }
+
+    .theme-popover {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: var(--s1); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.6rem;
+      display: none; gap: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      z-index: 200;
+    }
+    .theme-popover.open { display: flex; }
+    .theme-swatch {
+      width: 22px; height: 22px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+    }
+    .theme-swatch:hover { transform: scale(1.15); }
+    .theme-swatch.active { border-color: var(--text); }
+    .swatch-dark     { background: #4f8ef7; }
+    .swatch-midnight { background: #a78bfa; }
+    .swatch-light    { background: #0d9488; }
+    .swatch-amber    { background: #f59e0b; }
+
+    /* ── LAYOUT ────────────────────────────────────────── */
     main {
-      max-width: 1120px; margin: 0 auto;
-      padding: 1.25rem 1.5rem;
+      max-width: 1140px; margin: 0 auto;
+      padding: 1.1rem 1.25rem;
       display: flex; flex-direction: column; gap: 0.85rem;
     }
 
-    /* ── Cards ──────────────────────────────────────── */
+    /* ── CARDS ─────────────────────────────────────────── */
     .card {
       background: var(--s1);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.1rem 1.25rem;
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
       position: relative; overflow: hidden;
+      transition: background 0.2s, border-color 0.2s;
     }
-
     .card-label {
-      font-size: 0.67rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--muted); margin-bottom: 0.45rem;
+      font-size: 0.65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      color: var(--muted); margin-bottom: 0.4rem;
     }
-
-    /* ── Hero row ───────────────────────────────────── */
-    .hero-row {
-      display: grid;
-      grid-template-columns: 185px 1fr;
-      gap: 0.85rem; align-items: start;
-    }
-
-    .weight-card::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    .card-accent-bar::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, var(--accent), transparent);
     }
 
-    .weight-val  {
-      font-size: 2.9rem; font-weight: 800;
-      letter-spacing: -0.04em; line-height: 1; color: var(--text);
+    /* ── HERO ROW ──────────────────────────────────────── */
+    .hero-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 0.85rem; align-items: start;
     }
-    .weight-unit { font-size: 1.1rem; font-weight: 500; color: var(--muted); margin-left: 3px; }
+    .weight-val  { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+    .weight-unit { font-size: 1rem; font-weight: 500; color: var(--muted); margin-left: 2px; }
+    .weight-delta {
+      margin-top: 0.5rem; font-size: 0.78rem; font-weight: 600;
+      display: flex; align-items: center; gap: 4px;
+    }
 
-    /* ── Stat grid ──────────────────────────────────── */
+    /* ── STATS GRID ────────────────────────────────────── */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0.85rem;
     }
-
-    .stat-val {
-      font-size: 1.45rem; font-weight: 700;
-      letter-spacing: -0.025em; line-height: 1.1;
-    }
-    .stat-sub {
-      font-size: 0.68rem; color: var(--muted);
-      margin-top: 0.3rem;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
+    .stat-val { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; }
+    .stat-sub { font-size: 0.67rem; color: var(--muted); margin-top: 0.3rem; }
 
     .up   { color: var(--red); }
     .down { color: var(--green); }
     .flat { color: var(--muted); }
 
-    /* ── Chart row ──────────────────────────────────── */
+    /* ── CHART ROW ─────────────────────────────────────── */
     .chart-row {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       gap: 0.85rem;
     }
-
     .chart-card h3 {
-      font-size: 0.67rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--muted); margin-bottom: 0.85rem;
+      font-size: 0.65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      color: var(--muted); margin-bottom: 0.75rem;
     }
 
-    /* ── No data ────────────────────────────────────── */
+    /* ── INSIGHTS STRIP ────────────────────────────────── */
+    .section-title {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); padding: 0.25rem 0;
+    }
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+    }
+    .insight-card { display: flex; flex-direction: column; gap: 0.5rem; }
+    .insight-card h3 {
+      font-size: 0.65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      color: var(--muted);
+    }
+    .insight-summary {
+      font-size: 0.8rem; color: var(--text); line-height: 1.5;
+    }
+    .insight-summary strong { color: var(--accent); }
+    .insight-big {
+      font-size: 1.6rem; font-weight: 800;
+      letter-spacing: -0.03em; color: var(--accent);
+      line-height: 1;
+    }
+    .insight-sub { font-size: 0.72rem; color: var(--muted); }
+
+    /* stacked bar */
+    .split-bar {
+      height: 10px; border-radius: 5px;
+      background: var(--s2); overflow: hidden;
+      display: flex;
+    }
+    .split-bar-fat    { background: var(--red);   transition: width 0.4s; }
+    .split-bar-muscle { background: var(--green); transition: width 0.4s; }
+    .split-legend { display: flex; gap: 0.85rem; margin-top: 4px; }
+    .split-legend span {
+      font-size: 0.67rem; color: var(--muted);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .split-legend span::before {
+      content: ''; display: inline-block;
+      width: 8px; height: 8px; border-radius: 2px;
+    }
+    .split-legend .leg-fat::before    { background: var(--red); }
+    .split-legend .leg-muscle::before { background: var(--green); }
+
+    /* heatmap */
+    .heatmap-wrap { overflow-x: auto; padding-bottom: 4px; }
+    .heatmap {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(7, 10px);
+      gap: 3px;
+      width: max-content;
+    }
+    .hm-cell {
+      width: 10px; height: 10px; border-radius: 2px;
+      background: var(--s2);
+    }
+    .hm-cell[data-level="1"] { background: color-mix(in srgb, var(--accent) 25%, var(--s2)); }
+    .hm-cell[data-level="2"] { background: color-mix(in srgb, var(--accent) 55%, var(--s2)); }
+    .hm-cell[data-level="3"] { background: var(--accent); }
+    .streak-badge {
+      display: inline-block;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      border-radius: 20px; padding: 2px 10px;
+      font-size: 0.7rem; font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* garmin placeholder */
+    .garmin-lock {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.4rem; padding: 1.5rem 0;
+      color: var(--muted); text-align: center;
+    }
+    .garmin-lock .lock-icon { font-size: 1.6rem; }
+    .garmin-lock p { font-size: 0.75rem; }
+
+    /* ── GARMIN ROW ────────────────────────────────────── */
+    .garmin-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+    }
+    .garmin-val { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+    .garmin-sub { font-size: 0.67rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* ── NO DATA ───────────────────────────────────────── */
     #no-data {
       display: none; text-align: center;
       color: var(--muted); padding: 5rem 0; font-size: 0.9rem;
     }
 
-    /* ── Responsive ─────────────────────────────────── */
-    @media (max-width: 780px) {
-      header { padding: 0.75rem 1rem; }
-      main   { padding: 1rem; gap: 0.75rem; }
-
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .chart-row { grid-template-columns: 1fr; }
+      .insights-grid { grid-template-columns: repeat(2, 1fr); }
+      .garmin-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      header { padding: 0.65rem 1rem; }
+      main   { padding: 0.9rem 1rem; gap: 0.75rem; }
       .hero-row { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .chart-row  { grid-template-columns: 1fr; }
-
-      .weight-val { font-size: 2.4rem; }
+      .insights-grid { grid-template-columns: 1fr; }
+      .garmin-row { grid-template-columns: repeat(2, 1fr); }
+      .weight-val { font-size: 2.3rem; }
     }
-
-    @media (max-width: 400px) {
-      .range-pills button { padding: 5px 8px; font-size: 0.73rem; }
+    @media (max-width: 380px) {
+      .range-pills button { padding: 5px 7px; font-size: 0.7rem; }
+      .h-title { font-size: 0.82rem; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <div class="h-title">Health Dashboard</div>
-    <div class="h-sub" id="last-updated">Loading…</div>
+  <div class="h-brand">
+    <span class="h-icon">❤️</span>
+    <div>
+      <div class="h-title">Health Dashboard</div>
+      <div class="h-sub" id="last-updated">Loading…</div>
+    </div>
   </div>
-  <div class="range-pills">
-    <button data-range="30">30d</button>
-    <button data-range="90" class="active">90d</button>
-    <button data-range="365">1y</button>
-    <button data-range="0">All</button>
+  <div class="h-controls">
+    <div class="range-pills">
+      <button data-range="30">30d</button>
+      <button data-range="90" class="active">90d</button>
+      <button data-range="365">1y</button>
+      <button data-range="0">All</button>
+    </div>
+    <div style="position:relative">
+      <button class="theme-btn" id="theme-toggle" title="Change theme">🎨</button>
+      <div class="theme-popover" id="theme-popover">
+        <div class="theme-swatch swatch-dark"     data-theme="dark"     title="Dark"></div>
+        <div class="theme-swatch swatch-midnight" data-theme="midnight" title="Midnight"></div>
+        <div class="theme-swatch swatch-light"    data-theme="light"    title="Light"></div>
+        <div class="theme-swatch swatch-amber"    data-theme="amber"    title="Amber"></div>
+      </div>
+    </div>
   </div>
 </header>
 
 <main>
   <p id="no-data">No data yet — trigger the routine to populate data.json.</p>
 
-  <div id="dashboard">
-    <div class="hero-row">
-      <!-- Current weight -->
-      <div class="card weight-card">
-        <div class="card-label">Current weight</div>
-        <div id="hero-weight"><span class="weight-val">—</span></div>
-      </div>
+  <div id="dashboard" style="display:none; display:flex; flex-direction:column; gap:0.85rem;">
 
-      <!-- Stat cards -->
+    <!-- HERO -->
+    <div class="hero-row">
+      <div class="card card-accent-bar">
+        <div class="card-label">Current Weight</div>
+        <div id="hero-weight">
+          <span class="weight-val">—</span>
+        </div>
+        <div class="weight-delta" id="hero-delta"></div>
+      </div>
       <div class="stats-grid">
         <div class="card">
           <div class="card-label">Change</div>
@@ -208,7 +407,7 @@
       </div>
     </div>
 
-    <!-- Charts -->
+    <!-- BODY COMPOSITION CHARTS -->
     <div class="chart-row">
       <div class="card chart-card">
         <h3>Weight (kg)</h3>
@@ -223,172 +422,637 @@
         <canvas id="chart-muscle"></canvas>
       </div>
     </div>
+
+    <!-- GARMIN STATS (shown only when garmin data present) -->
+    <div id="garmin-section" style="display:none">
+      <div class="section-title" style="margin-bottom:0.5rem">Training · Garmin</div>
+      <div class="garmin-row">
+        <div class="card">
+          <div class="card-label">Workouts</div>
+          <div class="garmin-val" id="g-workouts">—</div>
+          <div class="garmin-sub" id="g-workouts-sub"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Total Time</div>
+          <div class="garmin-val" id="g-time">—</div>
+          <div class="garmin-sub">minutes active</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Avg Distance</div>
+          <div class="garmin-val" id="g-dist">—</div>
+          <div class="garmin-sub">km per session</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Avg Heart Rate</div>
+          <div class="garmin-val" id="g-hr">—</div>
+          <div class="garmin-sub">bpm during workouts</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GARMIN PLACEHOLDER (shown when no garmin data) -->
+    <div id="garmin-placeholder" class="card">
+      <div class="garmin-lock">
+        <span class="lock-icon">🏃</span>
+        <p><strong>Connect Garmin to unlock training insights</strong></p>
+        <p>Add <code>garmin.json</code> via the fetch_garmin.py routine to see workout trends.</p>
+      </div>
+    </div>
+
+    <!-- INSIGHTS -->
+    <div class="section-title" style="margin-bottom:0.5rem">Trends &amp; Insights</div>
+    <div class="insights-grid">
+
+      <!-- 1. Fat vs Muscle Split -->
+      <div class="card insight-card">
+        <h3>Fat vs Muscle Split</h3>
+        <div id="insight-split-summary" class="insight-summary">—</div>
+        <div class="split-bar" id="insight-split-bar">
+          <div class="split-bar-fat"    id="split-fat-bar"    style="width:50%"></div>
+          <div class="split-bar-muscle" id="split-muscle-bar" style="width:50%"></div>
+        </div>
+        <div class="split-legend">
+          <span class="leg-fat">Fat lost</span>
+          <span class="leg-muscle">Muscle lost</span>
+        </div>
+      </div>
+
+      <!-- 2. Training Load vs Weight -->
+      <div class="card insight-card" id="insight-training-card">
+        <h3>Training Load vs Weight</h3>
+        <canvas id="chart-training-weight" style="max-height:120px"></canvas>
+        <div id="insight-training-note" class="insight-sub" style="margin-top:4px">Requires Garmin data</div>
+      </div>
+
+      <!-- 3. Body Composition Trajectory -->
+      <div class="card insight-card">
+        <h3>Fat % Trajectory</h3>
+        <canvas id="chart-fatpct-proj" style="max-height:120px"></canvas>
+        <div id="insight-traj-summary" class="insight-sub" style="margin-top:4px">—</div>
+      </div>
+
+      <!-- 4. Resting Heart Rate -->
+      <div class="card insight-card" id="insight-hr-card">
+        <h3>Easy-Effort HR Trend</h3>
+        <div id="insight-hr-content">
+          <div id="insight-hr-garmin-lock" class="garmin-lock" style="padding:0.75rem 0">
+            <span style="font-size:1rem">🔒</span>
+            <p>Requires Garmin data</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Weekly Consistency -->
+      <div class="card insight-card" style="grid-column: span 2" id="insight-consistency-card">
+        <h3>Weekly Consistency</h3>
+        <div id="insight-consistency-score" class="insight-summary" style="margin-bottom:0.5rem">—</div>
+        <div class="heatmap-wrap">
+          <div class="heatmap" id="heatmap-grid"></div>
+        </div>
+        <div id="streak-badge-wrap" style="margin-top:6px"></div>
+      </div>
+
+    </div>
+
+    <!-- TRAINING LOAD CHART (full width, garmin only) -->
+    <div id="garmin-combo-section" style="display:none">
+      <div class="card chart-card">
+        <h3>Weekly Training Load vs Weight</h3>
+        <canvas id="chart-combo"></canvas>
+      </div>
+    </div>
+
   </div>
 </main>
 
 <script>
-const $  = id => document.getElementById(id);
-const fmt = (v, d = 1) => v == null ? '—' : Number(v).toFixed(d);
+/* ── UTILS ─────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const fmt = (v, d=1) => v == null ? '—' : Number(v).toFixed(d);
+const fmtDate = s => s ? s.slice(5) : '';
 
-function movingAvg(arr, w = 7) {
+function movingAvg(arr, w=7) {
   return arr.map((_, i) => {
-    const s = arr.slice(Math.max(0, i - w + 1), i + 1).filter(v => v != null);
-    return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null;
+    const s = arr.slice(Math.max(0, i-w+1), i+1).filter(v => v != null);
+    return s.length ? s.reduce((a,b)=>a+b,0)/s.length : null;
   });
 }
 
-// ── Chart defaults ───────────────────────────────────
-const CHART_BASE = {
-  responsive: true,
-  maintainAspectRatio: true,
-  interaction: { mode: 'index', intersect: false },
-  plugins: {
-    legend: { display: false },
-    tooltip: {
-      displayColors: false,
-      backgroundColor: '#161b27',
-      borderColor: '#1e2533', borderWidth: 1,
-      titleColor: '#7d8590', bodyColor: '#e6edf3',
-      padding: 10,
-      titleFont: { size: 11, family: 'Inter' },
-      bodyFont:  { size: 12, family: 'Inter' },
-    },
-  },
-  scales: {
-    x: {
-      ticks: { color: '#7d8590', maxTicksLimit: 6, maxRotation: 0, font: { size: 10 } },
-      grid:  { color: '#1e2533' },
-      border: { display: false },
-    },
-    y: {
-      ticks: { color: '#7d8590', font: { size: 10 } },
-      grid:  { color: '#1e2533' },
-      border: { display: false },
-    },
-  },
+function linReg(xs, ys) {
+  const n = xs.length;
+  if (n < 2) return null;
+  const mx = xs.reduce((a,b)=>a+b,0)/n;
+  const my = ys.reduce((a,b)=>a+b,0)/n;
+  const num = xs.reduce((a,x,i)=>a+(x-mx)*(ys[i]-my),0);
+  const den = xs.reduce((a,x)=>a+(x-mx)**2,0);
+  if (!den) return null;
+  const slope = num/den, intercept = my - slope*mx;
+  return { slope, intercept };
+}
+
+function isoToDay(s) { return new Date(s+'T00:00:00').getTime() / 86400000; }
+
+function addDays(dateStr, n) {
+  const d = new Date(dateStr+'T00:00:00');
+  d.setDate(d.getDate()+n);
+  return d.toISOString().slice(0,10);
+}
+
+/* ── THEME ─────────────────────────────────────────────── */
+const THEMES = ['dark','midnight','light','amber'];
+const THEME_COLORS = {
+  dark:     { accent:'#4f8ef7', red:'#f85149', green:'#3fb950', purple:'#a371f7', grid:'#1e2533', tooltip:'#161b27', muted:'#7d8590', text:'#e6edf3' },
+  midnight: { accent:'#a78bfa', red:'#f87171', green:'#34d399', purple:'#c084fc', grid:'#1a1d35', tooltip:'#131628', muted:'#6b7099', text:'#e2e4f0' },
+  light:    { accent:'#0d9488', red:'#cf222e', green:'#1a7f37', purple:'#8250df', grid:'#e8ecef', tooltip:'#ffffff', muted:'#57606a', text:'#1f2328' },
+  amber:    { accent:'#f59e0b', red:'#dc2626', green:'#65a30d', purple:'#c084fc', grid:'#2e2010', tooltip:'#1a1208', muted:'#9c8260', text:'#f5e6c8' },
 };
 
-// ── State ────────────────────────────────────────────
-let allData = [], charts = {}, activeRange = 90;
+let currentTheme = localStorage.getItem('theme') || 'dark';
 
-function filterData(range) {
-  if (!range) return allData;
-  const cut = new Date();
-  cut.setDate(cut.getDate() - range);
-  const cutStr = cut.toISOString().slice(0, 10);
-  return allData.filter(r => r.date >= cutStr);
+function applyTheme(t) {
+  currentTheme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('theme', t);
+  document.querySelectorAll('.theme-swatch').forEach(s =>
+    s.classList.toggle('active', s.dataset.theme === t));
+  if (allWithings.length) applyRange(activeRange);
 }
 
-// ── Stats (all from filtered data) ───────────────────
-function renderStats(data) {
-  // Current weight — always latest overall reading
-  const cur = [...allData].reverse().find(r => r.weight != null)?.weight;
-  $('hero-weight').innerHTML = cur != null
-    ? `<span class="weight-val">${fmt(cur)}</span><span class="weight-unit">kg</span>`
-    : `<span class="weight-val">—</span>`;
+$('theme-toggle').addEventListener('click', e => {
+  e.stopPropagation();
+  $('theme-popover').classList.toggle('open');
+});
+document.querySelectorAll('.theme-swatch').forEach(s =>
+  s.addEventListener('click', () => { applyTheme(s.dataset.theme); $('theme-popover').classList.remove('open'); }));
+document.addEventListener('click', () => $('theme-popover').classList.remove('open'));
+// Set initial swatch active state
+document.querySelectorAll('.theme-swatch').forEach(s =>
+  s.classList.toggle('active', s.dataset.theme === currentTheme));
 
-  // All other stats from the selected range
-  const ws      = data.filter(r => r.weight != null);
-  const weights = ws.map(r => r.weight);
-  const first   = ws[0]?.weight;
-  const last    = ws.at(-1)?.weight;
-  const delta   = first != null && last != null ? last - first : null;
-
-  const deltaEl = $('stat-delta');
-  if (delta != null) {
-    const sign = delta > 0 ? '+' : '';
-    deltaEl.textContent = `${sign}${fmt(delta)} kg`;
-    deltaEl.className   = `stat-val ${delta > 0.05 ? 'up' : delta < -0.05 ? 'down' : 'flat'}`;
-  } else {
-    deltaEl.textContent = '—';
-    deltaEl.className   = 'stat-val flat';
-  }
-  $('stat-delta-sub').textContent = ws.length >= 2
-    ? `${ws[0].date.slice(5)} → ${ws.at(-1).date.slice(5)}` : '';
-
-  $('stat-min').textContent = weights.length ? `${fmt(Math.min(...weights))} kg` : '—';
-  $('stat-max').textContent = weights.length ? `${fmt(Math.max(...weights))} kg` : '—';
-  $('stat-avg').textContent = weights.length
-    ? `${fmt(weights.reduce((a, b) => a + b, 0) / weights.length)} kg` : '—';
-}
-
-// ── Charts ───────────────────────────────────────────
-function ds(color, bg, data) {
+/* ── CHART FACTORY ─────────────────────────────────────── */
+function chartDefaults() {
+  const C = THEME_COLORS[currentTheme];
   return {
-    data, borderColor: color, backgroundColor: bg,
-    borderWidth: 2, pointRadius: 0, tension: 0.3,
-    fill: true, spanGaps: true,
+    responsive: true, maintainAspectRatio: true,
+    interaction: { mode:'index', intersect:false },
+    plugins: {
+      legend: { display:false },
+      tooltip: {
+        displayColors: false,
+        backgroundColor: C.tooltip,
+        borderColor: C.grid, borderWidth:1,
+        titleColor: C.muted, bodyColor: C.text,
+        padding:10,
+        titleFont:{ size:11, family:'Inter' },
+        bodyFont: { size:12, family:'Inter' },
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color:C.muted, maxTicksLimit:6, maxRotation:0, font:{size:10} },
+        grid:  { color:C.grid },
+        border:{ display:false },
+      },
+      y: {
+        ticks: { color:C.muted, font:{size:10} },
+        grid:  { color:C.grid },
+        border:{ display:false },
+      },
+    },
   };
 }
 
-function renderCharts(data) {
-  Object.values(charts).forEach(c => c.destroy());
-  charts = {};
+function ds(color, bg, data, opts={}) {
+  return { data, borderColor:color, backgroundColor:bg,
+    borderWidth:2, pointRadius:0, tension:0.3, fill:true, spanGaps:true, ...opts };
+}
 
-  const labels  = data.map(r => r.date);
-  const weights = data.map(r => r.weight   ?? null);
-  const fat     = data.map(r => r.fat_pct  ?? null);
-  const muscle  = data.map(r => r.muscle_kg ?? null);
+/* ── STATE ─────────────────────────────────────────────── */
+let allWithings = [], allGarmin = [], charts = {}, activeRange = 90;
+
+function filterWithings(range) {
+  if (!range) return allWithings;
+  const cut = new Date(); cut.setDate(cut.getDate()-range);
+  const cutStr = cut.toISOString().slice(0,10);
+  return allWithings.filter(r => r.date >= cutStr);
+}
+function filterGarmin(range) {
+  if (!range) return allGarmin;
+  const cut = new Date(); cut.setDate(cut.getDate()-range);
+  const cutStr = cut.toISOString().slice(0,10);
+  return allGarmin.filter(r => r.date >= cutStr);
+}
+
+/* ── STATS ─────────────────────────────────────────────── */
+function renderStats(data) {
+  const cur = [...allWithings].reverse().find(r=>r.weight!=null)?.weight;
+  $('hero-weight').innerHTML = cur!=null
+    ? `<span class="weight-val">${fmt(cur)}</span><span class="weight-unit">kg</span>`
+    : `<span class="weight-val">—</span>`;
+
+  const ws = data.filter(r=>r.weight!=null);
+  const weights = ws.map(r=>r.weight);
+  const first = ws[0]?.weight, last = ws.at(-1)?.weight;
+  const delta = first!=null && last!=null ? last-first : null;
+
+  const deltaEl = $('stat-delta');
+  if (delta!=null) {
+    const sign = delta>0?'+':'';
+    deltaEl.textContent = `${sign}${fmt(delta)} kg`;
+    deltaEl.className = `stat-val ${delta>0.05?'up':delta<-0.05?'down':'flat'}`;
+    $('hero-delta').innerHTML = `<span class="${delta>0.05?'up':delta<-0.05?'down':'flat'}">${sign}${fmt(delta)} kg</span> <span style="color:var(--muted)">in period</span>`;
+  } else {
+    deltaEl.textContent='—'; deltaEl.className='stat-val flat'; $('hero-delta').innerHTML='';
+  }
+  $('stat-delta-sub').textContent = ws.length>=2 ? `${fmtDate(ws[0].date)} → ${fmtDate(ws.at(-1).date)}` : '';
+  $('stat-min').textContent = weights.length ? `${fmt(Math.min(...weights))} kg` : '—';
+  $('stat-max').textContent = weights.length ? `${fmt(Math.max(...weights))} kg` : '—';
+  $('stat-avg').textContent = weights.length ? `${fmt(weights.reduce((a,b)=>a+b,0)/weights.length)} kg` : '—';
+}
+
+/* ── GARMIN STATS ──────────────────────────────────────── */
+function renderGarminStats(gData) {
+  if (!gData.length) return;
+  $('garmin-section').style.display='';
+  $('garmin-placeholder').style.display='none';
+  $('g-workouts').textContent = gData.length;
+  $('g-workouts-sub').textContent = `sessions in period`;
+  const totalMin = gData.reduce((a,r)=>a+(r.duration_min||0),0);
+  $('g-time').textContent = totalMin;
+  const withDist = gData.filter(r=>r.distance_km>0);
+  $('g-dist').textContent = withDist.length
+    ? fmt(withDist.reduce((a,r)=>a+r.distance_km,0)/withDist.length)
+    : '—';
+  const withHR = gData.filter(r=>r.avg_hr>0);
+  $('g-hr').textContent = withHR.length
+    ? fmt(withHR.reduce((a,r)=>a+r.avg_hr,0)/withHR.length, 0)
+    : '—';
+}
+
+/* ── MAIN CHARTS ───────────────────────────────────────── */
+function renderCharts(data) {
+  ['weight','fat','muscle','fatpctProj','trainingWeight','combo'].forEach(k=>{
+    if(charts[k]){charts[k].destroy();delete charts[k];}
+  });
+  const C = THEME_COLORS[currentTheme];
+  const labels  = data.map(r=>r.date);
+  const weights = data.map(r=>r.weight??null);
+  const fat     = data.map(r=>r.fat_pct??null);
+  const muscle  = data.map(r=>r.muscle_kg??null);
 
   charts.weight = new Chart($('chart-weight'), {
-    type: 'line',
-    data: { labels, datasets: [
-      ds('#4f8ef7', 'rgba(79,142,247,0.1)', weights),
-      {
-        data: movingAvg(weights, 7),
-        label: '7d avg',
-        borderColor: '#a371f7', backgroundColor: 'transparent',
-        borderWidth: 1.5, borderDash: [4, 3],
-        pointRadius: 0, tension: 0.3, fill: false, spanGaps: true,
-      },
+    type:'line',
+    data:{ labels, datasets:[
+      ds(C.accent, `${C.accent}18`, weights),
+      { data:movingAvg(weights,7), label:'7d avg',
+        borderColor:C.purple, backgroundColor:'transparent',
+        borderWidth:1.5, borderDash:[4,3], pointRadius:0, tension:0.3, fill:false, spanGaps:true },
     ]},
-    options: { ...CHART_BASE, aspectRatio: 2.6 },
+    options:{...chartDefaults(), aspectRatio:2.6},
   });
 
   charts.fat = new Chart($('chart-fat'), {
-    type: 'line',
-    data: { labels, datasets: [ ds('#f85149', 'rgba(248,81,73,0.1)', fat) ] },
-    options: { ...CHART_BASE, aspectRatio: 1.8 },
+    type:'line',
+    data:{ labels, datasets:[ ds(C.red, `${C.red}18`, fat) ] },
+    options:{...chartDefaults(), aspectRatio:1.8},
   });
 
   charts.muscle = new Chart($('chart-muscle'), {
-    type: 'line',
-    data: { labels, datasets: [ ds('#3fb950', 'rgba(63,185,80,0.1)', muscle) ] },
-    options: { ...CHART_BASE, aspectRatio: 1.8 },
+    type:'line',
+    data:{ labels, datasets:[ ds(C.green, `${C.green}18`, muscle) ] },
+    options:{...chartDefaults(), aspectRatio:1.8},
   });
 }
 
-// ── Range selection ───────────────────────────────────
+/* ── INSIGHT 1: FAT vs MUSCLE SPLIT ───────────────────── */
+function renderSplitInsight(data) {
+  const ws = data.filter(r=>r.weight!=null && r.fat_pct!=null && r.muscle_kg!=null);
+  if (ws.length < 2) { $('insight-split-summary').innerHTML='Not enough data'; return; }
+  const first = ws[0], last = ws.at(-1);
+  const fatFirst   = first.weight * first.fat_pct / 100;
+  const fatLast    = last.weight  * last.fat_pct  / 100;
+  const fatDelta   = fatFirst - fatLast;
+  const musDelta   = first.muscle_kg - last.muscle_kg;
+  const total = Math.abs(fatDelta) + Math.abs(musDelta);
+
+  if (total < 0.05) { $('insight-split-summary').innerHTML='Composition stable in period'; return; }
+
+  const fatPct = total>0 ? Math.round(Math.abs(fatDelta)/total*100) : 0;
+  const musPct = 100 - fatPct;
+
+  $('split-fat-bar').style.width    = fatPct+'%';
+  $('split-muscle-bar').style.width = musPct+'%';
+
+  const fatSign = fatDelta>=0 ? '▼' : '▲';
+  const musSign = musDelta>=0 ? '▼' : '▲';
+  $('insight-split-summary').innerHTML =
+    `<strong>${fatPct}%</strong> of change was fat (${fatSign}${fmt(Math.abs(fatDelta))} kg), ` +
+    `<strong>${musPct}%</strong> muscle (${musSign}${fmt(Math.abs(musDelta))} kg)`;
+}
+
+/* ── INSIGHT 3: FAT% TRAJECTORY ───────────────────────── */
+function renderTrajectoryInsight(data) {
+  const C = THEME_COLORS[currentTheme];
+  const window30 = data.filter(r=>r.fat_pct!=null).slice(-30);
+  if (window30.length < 5) { $('insight-traj-summary').textContent='Need more data'; return; }
+
+  const xs = window30.map(r=>isoToDay(r.date));
+  const ys = window30.map(r=>r.fat_pct);
+  const reg = linReg(xs, ys);
+  if (!reg) return;
+
+  const lastDate = window30.at(-1).date;
+  const lastDay  = isoToDay(lastDate);
+  const projDays = 30;
+  const projDate = addDays(lastDate, projDays);
+  const projVal  = reg.intercept + reg.slope*(lastDay+projDays);
+
+  const allLabels = [...window30.map(r=>r.date)];
+  const allActual = [...ys];
+  const projLine  = new Array(window30.length).fill(null);
+
+  // Extend labels by 30 days (weekly ticks)
+  for (let i=7; i<=projDays; i+=7) {
+    allLabels.push(addDays(lastDate, i));
+    allActual.push(null);
+    projLine.push(reg.intercept + reg.slope*(lastDay+i));
+  }
+  // connect last actual to proj start
+  projLine[window30.length-1] = ys.at(-1);
+
+  if(charts.fatpctProj){charts.fatpctProj.destroy();}
+  charts.fatpctProj = new Chart($('chart-fatpct-proj'), {
+    type:'line',
+    data:{ labels:allLabels, datasets:[
+      ds(C.red, `${C.red}18`, allActual),
+      { data:projLine, borderColor:C.accent, backgroundColor:'transparent',
+        borderWidth:2, borderDash:[5,4], pointRadius:0, tension:0.2, fill:false, spanGaps:false },
+    ]},
+    options:{ ...chartDefaults(), aspectRatio:2.2,
+      plugins:{ ...chartDefaults().plugins,
+        tooltip:{ ...chartDefaults().plugins.tooltip,
+          callbacks:{ label: ctx => `${fmt(ctx.parsed.y,1)}%` }
+        }
+      }
+    },
+  });
+
+  const dir = reg.slope < 0 ? 'reach' : 'rise to';
+  $('insight-traj-summary').innerHTML =
+    `At this rate you'll ${dir} <strong>${fmt(projVal,1)}%</strong> body fat by ${projDate.slice(5)}`;
+}
+
+/* ── INSIGHT 4: RESTING HR ─────────────────────────────── */
+function renderHRInsight(gData) {
+  const C = THEME_COLORS[currentTheme];
+  const easy = gData.filter(r=>r.avg_hr>0 && r.avg_hr<130);
+  if (!easy.length) { return; } // stays locked
+
+  $('insight-hr-garmin-lock').style.display='none';
+  const wrap = $('insight-hr-content');
+
+  // 30d vs 90d avg HR
+  const now = new Date().toISOString().slice(0,10);
+  const cut30 = addDays(now, -30), cut90 = addDays(now, -90);
+  const hr30 = easy.filter(r=>r.date>=cut30).map(r=>r.avg_hr);
+  const hr90 = easy.filter(r=>r.date>=cut90).map(r=>r.avg_hr);
+  const avg30 = hr30.length ? hr30.reduce((a,b)=>a+b)/hr30.length : null;
+  const avg90 = hr90.length ? hr90.reduce((a,b)=>a+b)/hr90.length : null;
+  const diff  = avg30!=null && avg90!=null ? avg30-avg90 : null;
+
+  const arrow = diff!=null ? (diff<0?'↓':'↑') : '';
+  const cls   = diff!=null ? (diff<0?'down':'up') : 'flat';
+
+  wrap.innerHTML = `
+    <div style="margin-bottom:0.4rem">
+      <span class="insight-big" style="color:var(--accent)">${avg30!=null?fmt(avg30,0):'—'}</span>
+      <span class="insight-sub"> bpm (30d avg)</span>
+    </div>
+    <div class="insight-summary">
+      <span class="${cls}" style="font-weight:700;font-size:1rem">${arrow} ${diff!=null?fmt(Math.abs(diff),1):'—'} bpm</span>
+      vs 90-day baseline
+    </div>`;
+}
+
+/* ── INSIGHT 5: WEEKLY CONSISTENCY ────────────────────── */
+function renderConsistencyInsight(gData, wData) {
+  const C = THEME_COLORS[currentTheme];
+  // Build a date→intensity map from garmin (0-3)
+  const intensityMap = {};
+  gData.forEach(r => {
+    let level = 1;
+    if (r.duration_min >= 45) level = 2;
+    if (r.duration_min >= 60 && r.avg_hr >= 130) level = 3;
+    intensityMap[r.date] = Math.max(intensityMap[r.date]||0, level);
+  });
+
+  // Use last 16 weeks (112 days)
+  const today = new Date();
+  const dayMs  = 86400000;
+  const startDay = new Date(today); startDay.setDate(today.getDate() - 111);
+  // align start to Sunday
+  startDay.setDate(startDay.getDate() - startDay.getDay());
+
+  const grid = $('heatmap-grid');
+  grid.innerHTML = '';
+
+  const days = [];
+  const cur = new Date(startDay);
+  while (cur <= today) {
+    days.push(cur.toISOString().slice(0,10));
+    cur.setDate(cur.getDate()+1);
+  }
+
+  days.forEach(d => {
+    const cell = document.createElement('div');
+    cell.className = 'hm-cell';
+    const lv = intensityMap[d] || 0;
+    if (lv) cell.setAttribute('data-level', lv);
+    cell.title = d;
+    grid.appendChild(cell);
+  });
+
+  // Consistency score: % of weeks with ≥3 sessions
+  const weeks = {};
+  gData.forEach(r => {
+    const d = new Date(r.date+'T00:00:00');
+    const weekStart = new Date(d); weekStart.setDate(d.getDate()-d.getDay());
+    const key = weekStart.toISOString().slice(0,10);
+    weeks[key] = (weeks[key]||0)+1;
+  });
+  const weekKeys = Object.keys(weeks);
+  const consistent = weekKeys.filter(k=>weeks[k]>=3).length;
+  const score = weekKeys.length ? Math.round(consistent/weekKeys.length*100) : null;
+
+  // Streak calculation
+  let streak=0, maxStreak=0, tempStreak=0;
+  const sortedDays = [...days].reverse();
+  for (const d of sortedDays) {
+    if (intensityMap[d]) { tempStreak++; if(tempStreak>maxStreak) maxStreak=tempStreak; }
+    else tempStreak=0;
+  }
+  // current streak (from today backwards)
+  for (const d of sortedDays) {
+    if (intensityMap[d]) streak++;
+    else break;
+  }
+
+  if (score!=null) {
+    $('insight-consistency-score').innerHTML =
+      `<strong>${score}%</strong> of weeks had ≥3 sessions — ` +
+      (score>=80 ? 'excellent consistency 🔥' : score>=50 ? 'solid routine' : 'room to improve');
+  } else {
+    $('insight-consistency-score').innerHTML = 'No Garmin data — heatmap shows Withings measurement days';
+    // fallback: show withings days
+    wData.forEach(r => {
+      const el = grid.querySelector(`[title="${r.date}"]`);
+      if (el) el.setAttribute('data-level','1');
+    });
+  }
+
+  $('streak-badge-wrap').innerHTML = streak
+    ? `<span class="streak-badge">🔥 ${streak}-day streak</span>`
+    : '';
+}
+
+/* ── INSIGHT 2: TRAINING LOAD vs WEIGHT ────────────────── */
+function renderTrainingLoadInsight(gData, wData) {
+  const C = THEME_COLORS[currentTheme];
+  if (!gData.length) { $('insight-training-note').textContent='Requires Garmin data'; return; }
+
+  $('insight-training-note').textContent='';
+  $('garmin-combo-section').style.display='';
+
+  // Group by ISO week
+  function weekKey(d) {
+    const dt = new Date(d+'T00:00:00');
+    const thursday = new Date(dt); thursday.setDate(dt.getDate()-(dt.getDay()+6)%7+3);
+    const jan4 = new Date(thursday.getFullYear(),0,4);
+    const wk = 1+Math.round(((thursday-jan4)/86400000-(3-((jan4.getDay()+6)%7)))/7);
+    return `${thursday.getFullYear()}-W${String(wk).padStart(2,'0')}`;
+  }
+
+  const weekMinutes = {}, weekDates = {};
+  gData.forEach(r => {
+    const k = weekKey(r.date);
+    weekMinutes[k] = (weekMinutes[k]||0)+(r.duration_min||0);
+    if (!weekDates[k]) weekDates[k]=r.date;
+  });
+
+  // weekly avg weight from withings
+  const weekWeights = {};
+  wData.forEach(r => {
+    if (!r.weight) return;
+    const k = weekKey(r.date);
+    if (!weekWeights[k]) weekWeights[k]=[];
+    weekWeights[k].push(r.weight);
+  });
+
+  const weeks = [...new Set([...Object.keys(weekMinutes),...Object.keys(weekWeights)])].sort();
+  const wLabels = weeks.map(k=>weekDates[k]||k);
+  const minData  = weeks.map(k=>weekMinutes[k]||0);
+  const wgData   = weeks.map(k=>weekWeights[k]?weekWeights[k].reduce((a,b)=>a+b)/weekWeights[k].length:null);
+
+  if(charts.combo){charts.combo.destroy();}
+  charts.combo = new Chart($('chart-combo'), {
+    type:'bar',
+    data:{ labels:wLabels, datasets:[
+      { type:'bar', data:minData, label:'Active min',
+        backgroundColor:`${C.accent}60`, borderColor:C.accent, borderWidth:1.5,
+        yAxisID:'y', borderRadius:3 },
+      { type:'line', data:wgData, label:'Avg weight',
+        borderColor:C.red, backgroundColor:'transparent',
+        borderWidth:2, pointRadius:2, tension:0.3, spanGaps:true,
+        yAxisID:'y2' },
+    ]},
+    options:{ ...chartDefaults(), aspectRatio:2.8,
+      plugins:{ ...chartDefaults().plugins, legend:{ display:true,
+        labels:{ color:C.muted, font:{size:10}, boxWidth:10 } } },
+      scales:{
+        x:{ ...chartDefaults().scales.x },
+        y:{ ...chartDefaults().scales.y, position:'left',
+          title:{ display:true, text:'min', color:C.muted, font:{size:10} } },
+        y2:{ ...chartDefaults().scales.y, position:'right', grid:{display:false},
+          title:{ display:true, text:'kg', color:C.muted, font:{size:10} } },
+      }
+    },
+  });
+
+  // small inline chart
+  if(charts.trainingWeight){charts.trainingWeight.destroy();}
+  charts.trainingWeight = new Chart($('chart-training-weight'), {
+    type:'bar',
+    data:{ labels:wLabels.slice(-8), datasets:[
+      { type:'bar', data:minData.slice(-8), backgroundColor:`${C.accent}50`, borderColor:C.accent, borderWidth:1, borderRadius:2 },
+      { type:'line', data:wgData.slice(-8), borderColor:C.red, backgroundColor:'transparent',
+        borderWidth:1.5, pointRadius:0, spanGaps:true, tension:0.3, yAxisID:'y2' },
+    ]},
+    options:{ ...chartDefaults(), aspectRatio:2.2,
+      scales:{
+        x:{ ...chartDefaults().scales.x, ticks:{...chartDefaults().scales.x.ticks, maxTicksLimit:4} },
+        y:{ ...chartDefaults().scales.y },
+        y2:{ ...chartDefaults().scales.y, position:'right', grid:{display:false} },
+      }
+    },
+  });
+}
+
+/* ── RENDER ALL ────────────────────────────────────────── */
 function applyRange(range) {
   activeRange = range;
   document.querySelectorAll('.range-pills button').forEach(b =>
-    b.classList.toggle('active', Number(b.dataset.range) === range));
-  const data = filterData(range);
-  renderStats(data);
-  renderCharts(data);
+    b.classList.toggle('active', Number(b.dataset.range)===range));
+
+  const wData = filterWithings(range);
+  const gData = filterGarmin(range);
+
+  renderStats(wData);
+  renderGarminStats(gData);
+  renderCharts(wData);
+  renderSplitInsight(wData);
+  renderTrajectoryInsight(wData);
+  renderHRInsight(gData);
+  renderConsistencyInsight(gData, wData);
+  renderTrainingLoadInsight(gData, wData);
 }
 
-// ── Boot ─────────────────────────────────────────────
-// ?t= query string busts the browser cache on every load
-fetch('data.json?t=' + Date.now())
-  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-  .then(data => {
-    if (!Array.isArray(data) || !data.length) {
-      $('no-data').style.display = 'block';
-      $('dashboard').style.display = 'none';
-      return;
-    }
-    allData = data;
-    const d = allData.at(-1)?.date;
-    if (d) $('last-updated').textContent = `Updated ${d}`;
-    document.querySelectorAll('.range-pills button').forEach(b =>
-      b.addEventListener('click', () => applyRange(Number(b.dataset.range))));
-    applyRange(activeRange);
-  })
-  .catch(() => {
-    $('no-data').style.display = 'block';
-    $('dashboard').style.display = 'none';
-  });
+/* ── BOOT ──────────────────────────────────────────────── */
+const t0 = Date.now();
+Promise.allSettled([
+  fetch('data.json?t='+t0).then(r=>{ if(!r.ok) throw r; return r.json(); }),
+  fetch('garmin.json?t='+t0).then(r=>{ if(!r.ok) throw r; return r.json(); }),
+]).then(([wRes, gRes]) => {
+  if (wRes.status==='fulfilled' && Array.isArray(wRes.value) && wRes.value.length) {
+    allWithings = wRes.value;
+    const d = allWithings.at(-1)?.date;
+    if (d) $('last-updated').textContent = `Withings · ${d}`;
+  }
+  if (gRes.status==='fulfilled' && Array.isArray(gRes.value) && gRes.value.length) {
+    allGarmin = gRes.value;
+    const gd = allGarmin.at(-1)?.date;
+    if (gd) $('last-updated').textContent += ` · Garmin · ${gd}`;
+  }
+
+  if (!allWithings.length) {
+    $('no-data').style.display='block';
+    $('dashboard').style.display='none';
+    return;
+  }
+
+  $('no-data').style.display='none';
+  $('dashboard').style.display='flex';
+
+  // Show/hide garmin placeholder
+  if (!allGarmin.length) {
+    $('garmin-section').style.display='none';
+    $('garmin-placeholder').style.display='';
+  }
+
+  document.querySelectorAll('.range-pills button').forEach(b =>
+    b.addEventListener('click', ()=>applyRange(Number(b.dataset.range))));
+
+  applyRange(activeRange);
+});
 </script>
 </body>
 </html>
