@@ -810,7 +810,8 @@ function renderHRInsight(gData) {
   const easy = gData.filter(r=>r.avg_hr>0 && r.avg_hr<130);
   if (!easy.length) { return; } // stays locked
 
-  $('insight-hr-garmin-lock').style.display='none';
+  const lockEl = $('insight-hr-garmin-lock');
+  if (lockEl) lockEl.style.display='none';
   const wrap = $('insight-hr-content');
 
   // 30d vs 90d avg HR
