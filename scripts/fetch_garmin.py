@@ -24,6 +24,49 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Load .env from repo root if present
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).parent.parent / ".env")
+except ImportError:
+    pass
+
+# Use Windows system trust store so corporate CA certs are trusted (patches ssl/requests)
+try:
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    pass
+
+# Also build a CA bundle for curl_cffi (libcurl), which bypasses Python's ssl module
+def _build_system_ca_bundle() -> str | None:
+    """Merge certifi's bundle with Windows root CAs; return path to temp PEM file."""
+    import base64
+    import ssl
+    import tempfile
+    try:
+        import certifi
+        pem = Path(certifi.where()).read_bytes()
+    except ImportError:
+        pem = b""
+    try:
+        for cert_data, enc_type, _trust in ssl.enum_certificates("ROOT"):
+            if enc_type == "x509_asn":
+                b64 = base64.b64encode(cert_data).decode("ascii")
+                lines = "\n".join(b64[i:i+64] for i in range(0, len(b64), 64))
+                pem += f"-----BEGIN CERTIFICATE-----\n{lines}\n-----END CERTIFICATE-----\n".encode()
+    except Exception:
+        return None
+    tmp = tempfile.NamedTemporaryFile(suffix=".pem", delete=False)
+    tmp.write(pem)
+    tmp.close()
+    return tmp.name
+
+_ca_bundle = _build_system_ca_bundle()
+if _ca_bundle:
+    os.environ.setdefault("CURL_CA_BUNDLE", _ca_bundle)
+    os.environ.setdefault("REQUESTS_CA_BUNDLE", _ca_bundle)
+
 # ── dependency guard ──────────────────────────────────────────────────────────
 try:
     from garminconnect import Garmin, GarminConnectAuthenticationError, GarminConnectConnectionError
@@ -48,28 +91,28 @@ OUT_PATH    = Path(__file__).parent.parent / "docs" / "garmin.json"
 
 # ── Azure helpers ─────────────────────────────────────────────────────────────
 
-def load_session_blob():
-    """Download serialised Garmin session from Azure. Returns dict or None."""
+def load_session_blob() -> str | None:
+    """Download serialised Garmin token string from Azure. Returns str or None."""
     if not (AZURE_AVAILABLE and CONN_STR):
         return None
     try:
         client = BlobServiceClient.from_connection_string(CONN_STR)
         blob   = client.get_container_client(CONTAINER).get_blob_client(SESSION_BLOB)
         data   = blob.download_blob().readall()
-        return json.loads(data)
+        return data.decode("utf-8")
     except Exception as e:
         print(f"  [azure] session blob not found or unreadable: {e}")
         return None
 
 
-def save_session_blob(session_data: dict):
-    """Upload serialised Garmin session to Azure."""
+def save_session_blob(token_str: str):
+    """Upload serialised Garmin token string to Azure."""
     if not (AZURE_AVAILABLE and CONN_STR):
         return
     try:
         client = BlobServiceClient.from_connection_string(CONN_STR)
         blob   = client.get_container_client(CONTAINER).get_blob_client(SESSION_BLOB)
-        blob.upload_blob(json.dumps(session_data), overwrite=True)
+        blob.upload_blob(token_str.encode("utf-8"), overwrite=True)
         print("  [azure] session blob updated")
     except Exception as e:
         print(f"  [azure] failed to save session blob: {e}")
@@ -85,20 +128,16 @@ def prompt_mfa() -> str:
         )
     return input("  [garmin] Enter MFA/2FA code: ").strip()
 
+def _login_with_retry(api: Garmin, token_str: str, max_attempts: int = 3) -> None:
+    """Call api.login(tokenstore=...) with exponential backoff on transient errors.
 
-def _login_with_retry(api: Garmin, session=None, max_attempts: int = 3) -> bool:
-    """Call api.login with exponential backoff on transient Cloudflare errors.
-
-    Returns True on success. Raises the last exception on persistent failure.
+    Raises the last exception on persistent failure.
     """
     delay = 10
     for attempt in range(1, max_attempts + 1):
         try:
-            if session is not None:
-                api.login(session)
-            else:
-                api.login(prompt_mfa=prompt_mfa)
-            return True
+            api.login(tokenstore=token_str)
+            return
         except GarminConnectConnectionError as e:
             msg = str(e)
             transient = any(code in msg for code in ("503", "429", "DNS cache"))
@@ -108,7 +147,6 @@ def _login_with_retry(api: Garmin, session=None, max_attempts: int = 3) -> bool:
             print(f"  [garmin] retrying in {delay}s…")
             time.sleep(delay)
             delay *= 2
-    return False  # unreachable
 
 
 def get_garmin_client() -> Garmin:
@@ -119,16 +157,16 @@ def get_garmin_client() -> Garmin:
     a non-interactive routine. If the stored session is missing or invalid, the
     Garmin step fails and the saved blob must be refreshed interactively.
     """
-    api = Garmin(EMAIL or "", PASSWORD or "")
+    api = Garmin(EMAIL or "", PASSWORD or "", prompt_mfa=prompt_mfa)
 
-    session = load_session_blob()
-    if not session:
+    token_str = load_session_blob()
+    if not token_str:
         raise RuntimeError(
             "No Garmin session blob found in Azure. Refresh it interactively "
             "(run the script on a machine with a TTY) before the routine can fetch."
         )
 
-    _login_with_retry(api, session=session)
+    _login_with_retry(api, token_str)
     print("  [garmin] session restored from Azure blob")
     return api
 
@@ -242,7 +280,7 @@ def main():
 
     # Rotate session token after successful API call
     try:
-        save_session_blob(api.get_token_dict())
+        save_session_blob(api.client.dumps())
     except Exception:
         pass
 
