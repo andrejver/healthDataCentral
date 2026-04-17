@@ -437,7 +437,7 @@
         <div class="card">
           <div class="card-label">Total Time</div>
           <div class="garmin-val" id="g-time">—</div>
-          <div class="garmin-sub">minutes active</div>
+          <div class="garmin-sub">total active time</div>
         </div>
         <div class="card">
           <div class="card-label">Avg Distance</div>
@@ -679,8 +679,9 @@ function renderGarminStats(gData) {
   $('garmin-placeholder').style.display='none';
   $('g-workouts').textContent = gData.length;
   $('g-workouts-sub').textContent = `sessions in period`;
-  const totalMin = gData.reduce((a,r)=>a+(r.duration_min||0),0);
-  $('g-time').textContent = totalMin;
+  const totalMin = Math.round(gData.reduce((a,r)=>a+(r.duration_min||0),0));
+  const h = Math.floor(totalMin/60), m = totalMin%60;
+  $('g-time').textContent = h>0 ? `${h}h ${m}m` : `${m}m`;
   const withDist = gData.filter(r=>r.distance_km>0);
   $('g-dist').textContent = withDist.length
     ? fmt(withDist.reduce((a,r)=>a+r.distance_km,0)/withDist.length)
