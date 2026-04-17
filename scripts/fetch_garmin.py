@@ -20,12 +20,13 @@ Optional:
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
 # ── dependency guard ──────────────────────────────────────────────────────────
 try:
-    from garminconnect import Garmin, GarminConnectAuthenticationError
+    from garminconnect import Garmin, GarminConnectAuthenticationError, GarminConnectConnectionError
 except ImportError:
     print("ERROR: garminconnect not installed. Run: pip install garminconnect")
     sys.exit(1)
@@ -166,6 +167,24 @@ def dedup_by_date(records: list[dict]) -> list[dict]:
             best[d] = r
     return sorted(best.values(), key=lambda r: r["date"])
 
+# ── retry helper ─────────────────────────────────────────────────────────────
+
+def fetch_activities_with_retry(api: Garmin, count: int, max_attempts: int = 4) -> list:
+    """Call api.get_activities with exponential backoff on transient errors."""
+    delay = 5
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return api.get_activities(0, count)
+        except GarminConnectConnectionError as e:
+            if attempt == max_attempts:
+                raise
+            print(f"  [garmin] transient error (attempt {attempt}/{max_attempts}): {e}")
+            print(f"  [garmin] retrying in {delay}s…")
+            time.sleep(delay)
+            delay *= 2
+    return []  # unreachable
+
+
 # ── main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -174,7 +193,7 @@ def main():
     api = get_garmin_client()
 
     print(f"  fetching last {ACTIVITY_COUNT} activities…")
-    raw_activities = api.get_activities(0, ACTIVITY_COUNT)
+    raw_activities = fetch_activities_with_retry(api, ACTIVITY_COUNT)
     print(f"  received {len(raw_activities)} activities")
 
     # Rotate session token after successful API call
