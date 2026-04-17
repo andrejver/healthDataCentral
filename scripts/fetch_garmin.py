@@ -112,25 +112,24 @@ def _login_with_retry(api: Garmin, session=None, max_attempts: int = 3) -> bool:
 
 
 def get_garmin_client() -> Garmin:
-    """Return an authenticated Garmin client, restoring session if possible."""
-    if not (EMAIL and PASSWORD):
-        raise RuntimeError("GARMIN_EMAIL and GARMIN_PASSWORD env vars are required.")
+    """Return an authenticated Garmin client using the stored session blob only.
 
-    api = Garmin(EMAIL, PASSWORD)
+    Full email/password login is intentionally not attempted: Garmin's Cloudflare
+    layer aggressively rate-limits automated logins and MFA cannot be prompted in
+    a non-interactive routine. If the stored session is missing or invalid, the
+    Garmin step fails and the saved blob must be refreshed interactively.
+    """
+    api = Garmin(EMAIL or "", PASSWORD or "")
 
     session = load_session_blob()
-    if session:
-        try:
-            _login_with_retry(api, session=session)
-            print("  [garmin] session restored from Azure blob")
-            return api
-        except Exception as e:
-            print(f"  [garmin] session restore failed ({e}), re-authenticating…")
+    if not session:
+        raise RuntimeError(
+            "No Garmin session blob found in Azure. Refresh it interactively "
+            "(run the script on a machine with a TTY) before the routine can fetch."
+        )
 
-    # Full login
-    _login_with_retry(api)
-    print("  [garmin] authenticated with email/password")
-    save_session_blob(api.get_token_dict())
+    _login_with_retry(api, session=session)
+    print("  [garmin] session restored from Azure blob")
     return api
 
 # ── activity parsing ──────────────────────────────────────────────────────────
