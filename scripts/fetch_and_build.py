@@ -24,6 +24,7 @@ from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
+from azure.core.exceptions import HttpResponseError
 from azure.storage.blob import BlobServiceClient
 
 load_dotenv()
@@ -57,13 +58,37 @@ def _blob_client():
     return service.get_blob_client(container=CONTAINER, blob=BLOB_NAME)
 
 
-def read_refresh_token() -> str:
-    data = _blob_client().download_blob().readall()
-    return data.decode().strip()
+def _is_transient(e: HttpResponseError) -> bool:
+    msg = str(e).lower()
+    return any(k in msg for k in ("dns cache", "503", "502", "timeout"))
 
 
-def write_refresh_token(token: str) -> None:
-    _blob_client().upload_blob(token.encode(), overwrite=True)
+def read_refresh_token(max_attempts: int = 4) -> str:
+    delay = 5
+    for attempt in range(1, max_attempts + 1):
+        try:
+            data = _blob_client().download_blob().readall()
+            return data.decode().strip()
+        except HttpResponseError as e:
+            if not _is_transient(e) or attempt == max_attempts:
+                raise
+            print(f"  [azure] read attempt {attempt}/{max_attempts} failed ({e}), retrying in {delay}s…")
+            time.sleep(delay)
+            delay *= 2
+
+
+def write_refresh_token(token: str, max_attempts: int = 4) -> None:
+    delay = 5
+    for attempt in range(1, max_attempts + 1):
+        try:
+            _blob_client().upload_blob(token.encode(), overwrite=True)
+            return
+        except HttpResponseError as e:
+            if not _is_transient(e) or attempt == max_attempts:
+                raise
+            print(f"  [azure] write attempt {attempt}/{max_attempts} failed ({e}), retrying in {delay}s…")
+            time.sleep(delay)
+            delay *= 2
 
 # ---------------------------------------------------------------------------
 # Token refresh
