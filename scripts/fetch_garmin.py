@@ -76,6 +76,41 @@ def save_session_blob(session_data: dict):
 
 # ── Garmin auth ───────────────────────────────────────────────────────────────
 
+def prompt_mfa() -> str:
+    """Return an MFA code, but fail loudly when no TTY is attached."""
+    if not sys.stdin.isatty():
+        raise RuntimeError(
+            "Garmin requires MFA but this run has no interactive terminal. "
+            "Refresh the Azure session blob from a machine where you can enter the code."
+        )
+    return input("  [garmin] Enter MFA/2FA code: ").strip()
+
+
+def _login_with_retry(api: Garmin, session=None, max_attempts: int = 3) -> bool:
+    """Call api.login with exponential backoff on transient Cloudflare errors.
+
+    Returns True on success. Raises the last exception on persistent failure.
+    """
+    delay = 10
+    for attempt in range(1, max_attempts + 1):
+        try:
+            if session is not None:
+                api.login(session)
+            else:
+                api.login(prompt_mfa=prompt_mfa)
+            return True
+        except GarminConnectConnectionError as e:
+            msg = str(e)
+            transient = any(code in msg for code in ("503", "429", "DNS cache"))
+            if not transient or attempt == max_attempts:
+                raise
+            print(f"  [garmin] login attempt {attempt}/{max_attempts} hit rate limit: {e}")
+            print(f"  [garmin] retrying in {delay}s…")
+            time.sleep(delay)
+            delay *= 2
+    return False  # unreachable
+
+
 def get_garmin_client() -> Garmin:
     """Return an authenticated Garmin client, restoring session if possible."""
     if not (EMAIL and PASSWORD):
@@ -86,14 +121,14 @@ def get_garmin_client() -> Garmin:
     session = load_session_blob()
     if session:
         try:
-            api.login(session)
+            _login_with_retry(api, session=session)
             print("  [garmin] session restored from Azure blob")
             return api
         except Exception as e:
             print(f"  [garmin] session restore failed ({e}), re-authenticating…")
 
     # Full login
-    api.login()
+    _login_with_retry(api)
     print("  [garmin] authenticated with email/password")
     save_session_blob(api.get_token_dict())
     return api
@@ -190,10 +225,20 @@ def fetch_activities_with_retry(api: Garmin, count: int, max_attempts: int = 4) 
 def main():
     print("=== Garmin Fetch ===")
 
-    api = get_garmin_client()
+    try:
+        api = get_garmin_client()
+    except (GarminConnectAuthenticationError, GarminConnectConnectionError, RuntimeError) as e:
+        print(f"  [garmin] authentication failed: {e}")
+        print("  [garmin] keeping existing docs/garmin.json untouched")
+        sys.exit(1)
 
     print(f"  fetching last {ACTIVITY_COUNT} activities…")
-    raw_activities = fetch_activities_with_retry(api, ACTIVITY_COUNT)
+    try:
+        raw_activities = fetch_activities_with_retry(api, ACTIVITY_COUNT)
+    except GarminConnectConnectionError as e:
+        print(f"  [garmin] activity fetch failed after retries: {e}")
+        print("  [garmin] keeping existing docs/garmin.json untouched")
+        sys.exit(1)
     print(f"  received {len(raw_activities)} activities")
 
     # Rotate session token after successful API call
