@@ -55,7 +55,11 @@ MARK_END   = "<!-- DASHBOARD_DATA_END -->"
 def load_withings() -> list[dict]:
     if not WITHINGS_JS.exists():
         return []
-    return json.loads(WITHINGS_JS.read_text())
+    try:
+        return json.loads(WITHINGS_JS.read_text())
+    except Exception as exc:
+        print(f"  [withings] could not parse {WITHINGS_JS.name}: {exc}")
+        return []
 
 
 def load_garmin_from_table() -> list[dict] | None:
