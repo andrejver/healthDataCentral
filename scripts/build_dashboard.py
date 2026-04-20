@@ -52,7 +52,28 @@ MARK_END   = "<!-- DASHBOARD_DATA_END -->"
 
 # ── data sources ──────────────────────────────────────────────────────────────
 
-def load_withings() -> list[dict]:
+def load_withings_from_table() -> list[dict] | None:
+    """Query Azure Table for every Withings row. None on failure."""
+    if not (TABLE_AVAILABLE and CONN_STR):
+        return None
+    try:
+        service = TableServiceClient.from_connection_string(CONN_STR)
+        table   = service.get_table_client(TABLE_NAME)
+        rows    = []
+        for e in table.query_entities("PartitionKey eq 'withings'"):
+            row = {"date": str(e.get("date", ""))}
+            for k in ("weight", "fat_pct", "muscle_kg"):
+                if k in e and e[k] is not None:
+                    row[k] = float(e[k])
+            if row["date"]:
+                rows.append(row)
+        return sorted(rows, key=lambda r: r["date"])
+    except Exception as exc:
+        print(f"  [table] Withings query failed: {exc}")
+        return None
+
+
+def load_withings_from_file() -> list[dict]:
     if not WITHINGS_JS.exists():
         return []
     try:
@@ -60,6 +81,14 @@ def load_withings() -> list[dict]:
     except Exception as exc:
         print(f"  [withings] could not parse {WITHINGS_JS.name}: {exc}")
         return []
+
+
+def load_withings() -> list[dict]:
+    rows = load_withings_from_table()
+    if rows is None:
+        print("  [withings] table unavailable, falling back to data.json")
+        return load_withings_from_file()
+    return rows
 
 
 def load_garmin_from_table() -> list[dict] | None:
