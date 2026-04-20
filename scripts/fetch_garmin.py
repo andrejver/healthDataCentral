@@ -123,21 +123,29 @@ def get_garmin_client() -> Garmin:
     if not (EMAIL and PASSWORD):
         raise RuntimeError("GARMIN_EMAIL and GARMIN_PASSWORD env vars are required.")
 
-    def prompt_mfa():
-        return input("  [garmin] Enter MFA/2FA code: ").strip()
-
-    api = Garmin(EMAIL, PASSWORD, prompt_mfa=prompt_mfa)
-
     token_str = load_session_blob()
     if token_str:
         try:
+            api = Garmin(EMAIL, PASSWORD)
             api.login(tokenstore=token_str)
+            # Persist refreshed token
+            save_session_blob(api.client.dumps())
             print("  [garmin] session restored from Azure blob")
             return api
         except Exception as e:
             print(f"  [garmin] session restore failed ({e}), re-authenticating…")
 
-    # Full login
+    # Full login — requires interactive MFA; fail clearly in non-interactive environments
+    if not sys.stdin.isatty():
+        raise RuntimeError(
+            "Garmin session token missing or expired and no interactive terminal "
+            "available for MFA. Run the script interactively once to refresh the token."
+        )
+
+    def prompt_mfa():
+        return input("  [garmin] Enter MFA/2FA code: ").strip()
+
+    api = Garmin(EMAIL, PASSWORD, prompt_mfa=prompt_mfa)
     api.login()
     print("  [garmin] authenticated with email/password")
     save_session_blob(api.client.dumps())
@@ -225,7 +233,7 @@ def main():
 
     # Rotate session token after successful API call
     try:
-        save_session_blob(api.get_token_dict())
+        save_session_blob(api.client.dumps())
     except Exception:
         pass
 
