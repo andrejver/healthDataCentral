@@ -248,5 +248,25 @@
     "avg_hr": 156,
     "max_hr": 168,
     "elevation_m": 20
+  },
+  {
+    "date": "2026-04-17",
+    "type": "running",
+    "duration_min": 30.1,
+    "distance_km": 2.9,
+    "calories": 227,
+    "avg_hr": 115,
+    "max_hr": 133,
+    "elevation_m": 13
+  },
+  {
+    "date": "2026-04-19",
+    "type": "running",
+    "duration_min": 59.1,
+    "distance_km": 7.1,
+    "calories": 603,
+    "avg_hr": 146,
+    "max_hr": 158,
+    "elevation_m": 28
   }
 ]
