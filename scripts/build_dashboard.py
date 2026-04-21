@@ -393,7 +393,11 @@ def inject(html: str, payload: dict) -> str:
     )
     if pattern.search(html):
         return pattern.sub(lambda _: block, html)
-    # First-time insertion: drop it right before </body>
+    # First-time insertion: place it before the main inline <script> so the
+    # JSON element is parsed before the boot code that reads it.
+    anchor = "</main>"
+    if anchor in html:
+        return html.replace(anchor, f"{anchor}\n\n{block}\n", 1)
     return html.replace("</body>", block + "\n</body>")
 
 
