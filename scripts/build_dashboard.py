@@ -3,9 +3,9 @@
 Bake a single combined data+insights structure into docs/index.html.
 
 Runs at the end of the routine. Queries the Azure Storage Table for activities
-(PartitionKey='garmin' / 'strava') and reads docs/data.json for Withings
-measurements, computes insight objects for 4 time ranges, and injects the
-combined payload between
+(PartitionKey='garmin' and PartitionKey='strava', merged + deduped by date)
+and reads docs/data.json for Withings measurements, computes insight objects
+for 4 time ranges, and injects the combined payload between
 
     <!-- DASHBOARD_DATA_START -->   ... <!-- DASHBOARD_DATA_END -->
 
@@ -40,6 +40,7 @@ ROOT        = Path(__file__).parent.parent
 HTML_PATH   = ROOT / "docs" / "index.html"
 WITHINGS_JS = ROOT / "docs" / "data.json"
 GARMIN_JS   = ROOT / "docs" / "garmin.json"
+STRAVA_JS   = ROOT / "docs" / "strava.json"
 
 CONN_STR    = os.environ.get("AZURE_STORAGE_CONNECTION_STRING", "")
 TABLE_NAME  = os.environ.get("ACTIVITIES_TABLE", "activities")
@@ -91,15 +92,15 @@ def load_withings() -> list[dict]:
     return rows
 
 
-def load_garmin_from_table() -> list[dict] | None:
-    """Query Azure Table for every Garmin activity. None on failure."""
+def load_activities_from_table(partition: str) -> list[dict] | None:
+    """Query Azure Table for every activity in `partition`. None on failure."""
     if not (TABLE_AVAILABLE and CONN_STR):
         return None
     try:
         service = TableServiceClient.from_connection_string(CONN_STR)
         table   = service.get_table_client(TABLE_NAME)
         rows    = []
-        for e in table.query_entities("PartitionKey eq 'garmin'"):
+        for e in table.query_entities(f"PartitionKey eq '{partition}'"):
             rows.append({
                 "date":         str(e.get("date", "")),
                 "type":         str(e.get("type", "")),
@@ -109,18 +110,19 @@ def load_garmin_from_table() -> list[dict] | None:
                 "avg_hr":       int(e.get("avg_hr")         or 0),
                 "max_hr":       int(e.get("max_hr")         or 0),
                 "elevation_m":  int(e.get("elevation_m")    or 0),
+                "source":       partition,
             })
         return rows
     except Exception as exc:
-        print(f"  [table] query failed: {exc}")
+        print(f"  [table] {partition} query failed: {exc}")
         return None
 
 
-def load_garmin_from_file() -> list[dict]:
-    if not GARMIN_JS.exists():
+def load_activities_from_file(path: Path) -> list[dict]:
+    if not path.exists():
         return []
     try:
-        return json.loads(GARMIN_JS.read_text())
+        return json.loads(path.read_text())
     except Exception:
         return []
 
@@ -406,14 +408,22 @@ def main() -> None:
     withings = load_withings()
     print(f"  withings: {len(withings)} rows")
 
-    garmin = load_garmin_from_table()
+    garmin = load_activities_from_table("garmin")
     if garmin is None:
         print("  garmin: table unavailable, falling back to garmin.json")
-        garmin = load_garmin_from_file()
-    garmin = dedup_garmin(garmin)
+        garmin = load_activities_from_file(GARMIN_JS)
     print(f"  garmin:   {len(garmin)} rows")
 
-    payload = build_payload(withings, garmin)
+    strava = load_activities_from_table("strava")
+    if strava is None:
+        print("  strava: table unavailable, falling back to strava.json")
+        strava = load_activities_from_file(STRAVA_JS)
+    print(f"  strava:   {len(strava)} rows")
+
+    activities = dedup_garmin(garmin + strava)
+    print(f"  merged:   {len(activities)} unique-day rows")
+
+    payload = build_payload(withings, activities)
 
     html = HTML_PATH.read_text(encoding="utf-8")
     HTML_PATH.write_text(inject(html, payload), encoding="utf-8")
