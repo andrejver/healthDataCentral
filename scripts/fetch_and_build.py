@@ -56,6 +56,11 @@ MEAS_FAT_PCT = 6    # %
 MEAS_MUSCLE  = 76   # kg
 
 TWO_YEARS_SECS = 2 * 365 * 24 * 3600
+# Re-query this far back on every incremental fetch so a measurement that
+# reaches the Withings cloud only after the previous routine run (e.g. a
+# morning weigh-in whose scale→phone→cloud sync finishes a few minutes
+# later) is still picked up next time. Upsert is idempotent.
+INCREMENTAL_SAFETY_SECS = 6 * 3600
 DATA_PATH = Path(__file__).parent.parent / "docs" / "data.json"
 
 # ---------------------------------------------------------------------------
@@ -176,7 +181,7 @@ def fetch_measurements(access_token: str, since_epoch: int) -> tuple[list[dict],
         "category":  1,
     }
     if since_epoch > 0:
-        params["lastupdate"] = since_epoch
+        params["lastupdate"] = max(0, since_epoch - INCREMENTAL_SAFETY_SECS)
     else:
         params["startdate"] = int(time.time()) - TWO_YEARS_SECS
 
