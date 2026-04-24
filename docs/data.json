@@ -3003,8 +3003,14 @@
   },
   {
     "date": "2026-04-23",
-    "weight": 98.87,
-    "fat_pct": 29.75,
-    "muscle_kg": 66.01
+    "weight": 100.25,
+    "fat_pct": 30.45,
+    "muscle_kg": 66.25
+  },
+  {
+    "date": "2026-04-24",
+    "weight": 98.94,
+    "fat_pct": 29.86,
+    "muscle_kg": 65.95
   }
 ]
