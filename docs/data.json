@@ -1,35 +1,5 @@
 [
   {
-    "date": "2024-04-21",
-    "weight": 105.75,
-    "muscle_kg": 66.82,
-    "fat_pct": 33.5
-  },
-  {
-    "date": "2024-04-22",
-    "weight": 104.94,
-    "muscle_kg": 64.08,
-    "fat_pct": 35.7
-  },
-  {
-    "date": "2024-04-23",
-    "weight": 104.56,
-    "muscle_kg": 64.42,
-    "fat_pct": 35.13
-  },
-  {
-    "date": "2024-04-24",
-    "weight": 104.47,
-    "muscle_kg": 64.41,
-    "fat_pct": 35.08
-  },
-  {
-    "date": "2024-04-25",
-    "weight": 104.09,
-    "muscle_kg": 64.74,
-    "fat_pct": 34.52
-  },
-  {
     "date": "2024-04-26",
     "weight": 103.98,
     "muscle_kg": 64.16,
@@ -2988,5 +2958,35 @@
     "weight": 98.69,
     "muscle_kg": 64.15,
     "fat_pct": 31.57
+  },
+  {
+    "date": "2026-04-21",
+    "weight": 98.21,
+    "muscle_kg": 63.7,
+    "fat_pct": 31.73
+  },
+  {
+    "date": "2026-04-22",
+    "weight": 98.11,
+    "muscle_kg": 64.45,
+    "fat_pct": 30.85
+  },
+  {
+    "date": "2026-04-23",
+    "weight": 98.87,
+    "muscle_kg": 66.01,
+    "fat_pct": 29.75
+  },
+  {
+    "date": "2026-04-24",
+    "weight": 98.94,
+    "muscle_kg": 65.95,
+    "fat_pct": 29.86
+  },
+  {
+    "date": "2026-04-25",
+    "weight": 98.64,
+    "muscle_kg": 65.98,
+    "fat_pct": 29.61
   }
 ]
