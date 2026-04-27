@@ -298,5 +298,15 @@
     "avg_hr": 133,
     "max_hr": 149,
     "elevation_m": 24
+  },
+  {
+    "date": "2026-04-26",
+    "type": "strength",
+    "duration_min": 26.3,
+    "distance_km": 0,
+    "calories": 140,
+    "avg_hr": 101,
+    "max_hr": 138,
+    "elevation_m": 0
   }
 ]

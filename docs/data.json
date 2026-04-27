@@ -1,17 +1,5 @@
 [
   {
-    "date": "2024-04-26",
-    "weight": 103.98,
-    "muscle_kg": 64.16,
-    "fat_pct": 35.03
-  },
-  {
-    "date": "2024-04-27",
-    "weight": 103.31,
-    "muscle_kg": 64.4,
-    "fat_pct": 34.36
-  },
-  {
     "date": "2024-04-28",
     "weight": 103.7,
     "muscle_kg": 66.44,
@@ -2988,5 +2976,17 @@
     "weight": 98.64,
     "muscle_kg": 65.98,
     "fat_pct": 29.61
+  },
+  {
+    "date": "2026-04-26",
+    "weight": 97.9,
+    "muscle_kg": 65.26,
+    "fat_pct": 29.85
+  },
+  {
+    "date": "2026-04-27",
+    "weight": 97.94,
+    "muscle_kg": 64.16,
+    "fat_pct": 31.04
   }
 ]
